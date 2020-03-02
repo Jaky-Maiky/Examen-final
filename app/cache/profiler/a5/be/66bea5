@@ -1,0 +1,1335 @@
+a:8:{s:5:"token";s:6:"66bea5";s:6:"parent";N;s:8:"children";a:0:{}s:4:"data";a:11:{s:6:"config";C:62:"Symfony\Component\HttpKernel\DataCollector\ConfigDataCollector":413:{a:16:{s:8:"app_name";N;s:11:"app_version";N;s:5:"token";s:6:"66bea5";s:15:"symfony_version";s:6:"2.6.13";s:4:"name";s:3:"n/a";s:3:"env";s:3:"n/a";s:5:"debug";s:3:"n/a";s:11:"php_version";s:6:"5.6.27";s:14:"xdebug_enabled";b:0;s:14:"eaccel_enabled";b:0;s:11:"apc_enabled";b:1;s:14:"xcache_enabled";b:0;s:16:"wincache_enabled";b:0;s:20:"zend_opcache_enabled";b:1;s:7:"bundles";a:0:{}s:9:"sapi_name";s:8:"fpm-fcgi";}}s:7:"request";C:63:"Symfony\Component\HttpKernel\DataCollector\RequestDataCollector":55552:{a:18:{s:6:"format";s:4:"html";s:7:"content";s:27775:"bolt_csrf_token=ab864750&title=Animacion+%23+1&slug=pauca-mutat-vel-plura-sane&image%5Bfile%5D=2020-03%2Fcaptura.png&teaser=%3C!DOCTYPE+html%3E%0D%0A%3Chtml+lang%3D%22en%22%3E%0D%0A++++%3Chead%3E%0D%0A++++++++%3Ctitle%3Ethree.js+webgl+-+cloth+simulation%3C%2Ftitle%3E%0D%0A++++++++%3Cmeta+charset%3D%22utf-8%22%3E%0D%0A++++++++%3Cmeta+name%3D%22viewport%22+content%3D%22width%3Ddevice-width%2C+user-scalable%3Dno%2C+minimum-scale%3D1.0%2C+maximum-scale%3D1.0%22%3E%0D%0A++++++++%3Clink+type%3D%22text%2Fcss%22+rel%3D%22stylesheet%22+href%3D%22main.css%22%3E%0D%0A++++++++%3Cstyle%3E%0D%0A++++++++++++body+%7B%0D%0A++++++++++++++++background-color%3A+%23cce0ff%3B%0D%0A++++++++++++++++color%3A+%23000%3B%0D%0A++++++++++++%7D%0D%0A++++++++++++a+%7B%0D%0A++++++++++++++++color%3A+%23080%3B%0D%0A++++++++++++%7D%0D%0A++++++++%3C%2Fstyle%3E%0D%0A++++%3C%2Fhead%3E%0D%0A%0D%0A++++%3Cbody%3E%0D%0A++++++++%3Cdiv+id%3D%22info%22%3ESimple+Cloth+Simulation%3Cbr%2F%3E%0D%0A++++++++++++Verlet+integration+with+relaxed+constraints%3Cbr%2F%3E%0D%0A++++++++%3C%2Fdiv%3E%0D%0A%0D%0A++++++++%3Cscript+type%3D%22module%22%3E%0D%0A%0D%0A++++++++++++import+*+as+THREE+from+'..%2Fbuild%2Fthree.module.js'%3B%0D%0A%0D%0A++++++++++++import+Stats+from+'.%2Fjsm%2Flibs%2Fstats.module.js'%3B%0D%0A++++++++++++import+%7B+GUI+%7D+from+'.%2Fjsm%2Flibs%2Fdat.gui.module.js'%3B%0D%0A%0D%0A++++++++++++import+%7B+OrbitControls+%7D+from+'.%2Fjsm%2Fcontrols%2FOrbitControls.js'%3B%0D%0A%0D%0A++++++++++++%2F*%0D%0A+++++++++++++*+Cloth+Simulation+using+a+relaxed+constraints+solver%0D%0A+++++++++++++*%2F%0D%0A%0D%0A++++++++++++%2F%2F+Suggested+Readings%0D%0A%0D%0A++++++++++++%2F%2F+Advanced+Character+Physics+by+Thomas+Jakobsen+Character%0D%0A++++++++++++%2F%2F+http%3A%2F%2Ffreespace.virgin.net%2Fhugo.elias%2Fmodels%2Fm_cloth.htm%0D%0A++++++++++++%2F%2F+http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FCloth_modeling%0D%0A++++++++++++%2F%2F+http%3A%2F%2Fcg.alexandra.dk%2Ftag%2Fspring-mass-system%2F%0D%0A++++++++++++%2F%2F+Real-time+Cloth+Animation+http%3A%2F%2Fwww.darwin3d.com%2Fgamedev%2Farticles%2Fcol0599.pdf%0D%0A%0D%0A++++++++++++var+params+%3D+%7B%0D%0A++++++++++++++++enableWind%3A+true%2C%0D%0A++++++++++++++++showBall%3A+false%2C%0D%0A++++++++++++++++tooglePins%3A+togglePins%0D%0A++++++++++++%7D%3B%0D%0A%0D%0A++++++++++++var+DAMPING+%3D+0.03%3B%0D%0A++++++++++++var+DRAG+%3D+1+-+DAMPING%3B%0D%0A++++++++++++var+MASS+%3D+0.1%3B%0D%0A++++++++++++var+restDistance+%3D+25%3B%0D%0A%0D%0A++++++++++++var+xSegs+%3D+10%3B%0D%0A++++++++++++var+ySegs+%3D+10%3B%0D%0A%0D%0A++++++++++++var+clothFunction+%3D+plane(+restDistance+*+xSegs%2C+restDistance+*+ySegs+)%3B%0D%0A%0D%0A++++++++++++var+cloth+%3D+new+Cloth(+xSegs%2C+ySegs+)%3B%0D%0A%0D%0A++++++++++++var+GRAVITY+%3D+981+*+1.4%3B%0D%0A++++++++++++var+gravity+%3D+new+THREE.Vector3(+0%2C+-+GRAVITY%2C+0+).multiplyScalar(+MASS+)%3B%0D%0A%0D%0A%0D%0A++++++++++++var+TIMESTEP+%3D+18+%2F+1000%3B%0D%0A++++++++++++var+TIMESTEP_SQ+%3D+TIMESTEP+*+TIMESTEP%3B%0D%0A%0D%0A++++++++++++var+pins+%3D+%5B%5D%3B%0D%0A%0D%0A++++++++++++var+windForce+%3D+new+THREE.Vector3(+0%2C+0%2C+0+)%3B%0D%0A%0D%0A++++++++++++var+ballPosition+%3D+new+THREE.Vector3(+0%2C+-+45%2C+0+)%3B%0D%0A++++++++++++var+ballSize+%3D+60%3B+%2F%2F40%0D%0A%0D%0A++++++++++++var+tmpForce+%3D+new+THREE.Vector3()%3B%0D%0A%0D%0A++++++++++++var+lastTime%3B%0D%0A%0D%0A%0D%0A++++++++++++function+plane(+width%2C+height+)+%7B%0D%0A%0D%0A++++++++++++++++return+function+(+u%2C+v%2C+target+)+%7B%0D%0A%0D%0A++++++++++++++++++++var+x+%3D+(+u+-+0.5+)+*+width%3B%0D%0A++++++++++++++++++++var+y+%3D+(+v+%2B+0.5+)+*+height%3B%0D%0A++++++++++++++++++++var+z+%3D+0%3B%0D%0A%0D%0A++++++++++++++++++++target.set(+x%2C+y%2C+z+)%3B%0D%0A%0D%0A++++++++++++++++%7D%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++function+Particle(+x%2C+y%2C+z%2C+mass+)+%7B%0D%0A%0D%0A++++++++++++++++this.position+%3D+new+THREE.Vector3()%3B%0D%0A++++++++++++++++this.previous+%3D+new+THREE.Vector3()%3B%0D%0A++++++++++++++++this.original+%3D+new+THREE.Vector3()%3B%0D%0A++++++++++++++++this.a+%3D+new+THREE.Vector3(+0%2C+0%2C+0+)%3B+%2F%2F+acceleration%0D%0A++++++++++++++++this.mass+%3D+mass%3B%0D%0A++++++++++++++++this.invMass+%3D+1+%2F+mass%3B%0D%0A++++++++++++++++this.tmp+%3D+new+THREE.Vector3()%3B%0D%0A++++++++++++++++this.tmp2+%3D+new+THREE.Vector3()%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+init%0D%0A%0D%0A++++++++++++++++clothFunction(+x%2C+y%2C+this.position+)%3B+%2F%2F+position%0D%0A++++++++++++++++clothFunction(+x%2C+y%2C+this.previous+)%3B+%2F%2F+previous%0D%0A++++++++++++++++clothFunction(+x%2C+y%2C+this.original+)%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++%2F%2F+Force+-%3E+Acceleration%0D%0A%0D%0A++++++++++++Particle.prototype.addForce+%3D+function+(+force+)+%7B%0D%0A%0D%0A++++++++++++++++this.a.add(%0D%0A++++++++++++++++++++this.tmp2.copy(+force+).multiplyScalar(+this.invMass+)%0D%0A++++++++++++++++)%3B%0D%0A%0D%0A++++++++++++%7D%3B%0D%0A%0D%0A%0D%0A++++++++++++%2F%2F+Performs+Verlet+integration%0D%0A%0D%0A++++++++++++Particle.prototype.integrate+%3D+function+(+timesq+)+%7B%0D%0A%0D%0A++++++++++++++++var+newPos+%3D+this.tmp.subVectors(+this.position%2C+this.previous+)%3B%0D%0A++++++++++++++++newPos.multiplyScalar(+DRAG+).add(+this.position+)%3B%0D%0A++++++++++++++++newPos.add(+this.a.multiplyScalar(+timesq+)+)%3B%0D%0A%0D%0A++++++++++++++++this.tmp+%3D+this.previous%3B%0D%0A++++++++++++++++this.previous+%3D+this.position%3B%0D%0A++++++++++++++++this.position+%3D+newPos%3B%0D%0A%0D%0A++++++++++++++++this.a.set(+0%2C+0%2C+0+)%3B%0D%0A%0D%0A++++++++++++%7D%3B%0D%0A%0D%0A%0D%0A++++++++++++var+diff+%3D+new+THREE.Vector3()%3B%0D%0A%0D%0A++++++++++++function+satisfyConstraints(+p1%2C+p2%2C+distance+)+%7B%0D%0A%0D%0A++++++++++++++++diff.subVectors(+p2.position%2C+p1.position+)%3B%0D%0A++++++++++++++++var+currentDist+%3D+diff.length()%3B%0D%0A++++++++++++++++if+(+currentDist+%3D%3D%3D+0+)+return%3B+%2F%2F+prevents+division+by+0%0D%0A++++++++++++++++var+correction+%3D+diff.multiplyScalar(+1+-+distance+%2F+currentDist+)%3B%0D%0A++++++++++++++++var+correctionHalf+%3D+correction.multiplyScalar(+0.5+)%3B%0D%0A++++++++++++++++p1.position.add(+correctionHalf+)%3B%0D%0A++++++++++++++++p2.position.sub(+correctionHalf+)%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A%0D%0A++++++++++++function+Cloth(+w%2C+h+)+%7B%0D%0A%0D%0A++++++++++++++++w+%3D+w+%7C%7C+10%3B%0D%0A++++++++++++++++h+%3D+h+%7C%7C+10%3B%0D%0A++++++++++++++++this.w+%3D+w%3B%0D%0A++++++++++++++++this.h+%3D+h%3B%0D%0A%0D%0A++++++++++++++++var+particles+%3D+%5B%5D%3B%0D%0A++++++++++++++++var+constraints+%3D+%5B%5D%3B%0D%0A%0D%0A++++++++++++++++var+u%2C+v%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+Create+particles%0D%0A++++++++++++++++for+(+v+%3D+0%3B+v+%3C%3D+h%3B+v+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++for+(+u+%3D+0%3B+u+%3C%3D+w%3B+u+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++particles.push(%0D%0A++++++++++++++++++++++++++++new+Particle(+u+%2F+w%2C+v+%2F+h%2C+0%2C+MASS+)%0D%0A++++++++++++++++++++++++)%3B%0D%0A%0D%0A++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%2F%2F+Structural%0D%0A%0D%0A++++++++++++++++for+(+v+%3D+0%3B+v+%3C+h%3B+v+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++for+(+u+%3D+0%3B+u+%3C+w%3B+u+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++constraints.push(+%5B%0D%0A++++++++++++++++++++++++++++particles%5B+index(+u%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++++++particles%5B+index(+u%2C+v+%2B+1+)+%5D%2C%0D%0A++++++++++++++++++++++++++++restDistance%0D%0A++++++++++++++++++++++++%5D+)%3B%0D%0A%0D%0A++++++++++++++++++++++++constraints.push(+%5B%0D%0A++++++++++++++++++++++++++++particles%5B+index(+u%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++++++particles%5B+index(+u+%2B+1%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++++++restDistance%0D%0A++++++++++++++++++++++++%5D+)%3B%0D%0A%0D%0A++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++for+(+u+%3D+w%2C+v+%3D+0%3B+v+%3C+h%3B+v+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++constraints.push(+%5B%0D%0A++++++++++++++++++++++++particles%5B+index(+u%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++particles%5B+index(+u%2C+v+%2B+1+)+%5D%2C%0D%0A++++++++++++++++++++++++restDistance%0D%0A%0D%0A++++++++++++++++++++%5D+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++for+(+v+%3D+h%2C+u+%3D+0%3B+u+%3C+w%3B+u+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++constraints.push(+%5B%0D%0A++++++++++++++++++++++++particles%5B+index(+u%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++particles%5B+index(+u+%2B+1%2C+v+)+%5D%2C%0D%0A++++++++++++++++++++++++restDistance%0D%0A++++++++++++++++++++%5D+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A%0D%0A++++++++++++++++%2F%2F+While+many+systems+use+shear+and+bend+springs%2C%0D%0A++++++++++++++++%2F%2F+the+relaxed+constraints+model+seems+to+be+just+fine%0D%0A++++++++++++++++%2F%2F+using+structural+springs.%0D%0A++++++++++++++++%2F%2F+Shear%0D%0A++++++++++++++++%2F%2F+var+diagonalDist+%3D+Math.sqrt(restDistance+*+restDistance+*+2)%3B%0D%0A%0D%0A%0D%0A++++++++++++++++%2F%2F+for+(v%3D0%3Bv%3Ch%3Bv%2B%2B)+%7B%0D%0A++++++++++++++++%2F%2F+++++for+(u%3D0%3Bu%3Cw%3Bu%2B%2B)+%7B%0D%0A%0D%0A++++++++++++++++%2F%2F+++++++++constraints.push(%5B%0D%0A++++++++++++++++%2F%2F+++++++++++++particles%5Bindex(u%2C+v)%5D%2C%0D%0A++++++++++++++++%2F%2F+++++++++++++particles%5Bindex(u%2B1%2C+v%2B1)%5D%2C%0D%0A++++++++++++++++%2F%2F+++++++++++++diagonalDist%0D%0A++++++++++++++++%2F%2F+++++++++%5D)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+++++++++constraints.push(%5B%0D%0A++++++++++++++++%2F%2F+++++++++++++particles%5Bindex(u%2B1%2C+v)%5D%2C%0D%0A++++++++++++++++%2F%2F+++++++++++++particles%5Bindex(u%2C+v%2B1)%5D%2C%0D%0A++++++++++++++++%2F%2F+++++++++++++diagonalDist%0D%0A++++++++++++++++%2F%2F+++++++++%5D)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+++++%7D%0D%0A++++++++++++++++%2F%2F+%7D%0D%0A%0D%0A%0D%0A++++++++++++++++this.particles+%3D+particles%3B%0D%0A++++++++++++++++this.constraints+%3D+constraints%3B%0D%0A%0D%0A++++++++++++++++function+index(+u%2C+v+)+%7B%0D%0A%0D%0A++++++++++++++++++++return+u+%2B+v+*+(+w+%2B+1+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++this.index+%3D+index%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++function+simulate(+time+)+%7B%0D%0A%0D%0A++++++++++++++++if+(+!+lastTime+)+%7B%0D%0A%0D%0A++++++++++++++++++++lastTime+%3D+time%3B%0D%0A++++++++++++++++++++return%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++var+i%2C+j%2C+il%2C+particles%2C+particle%2C+constraints%2C+constraint%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+Aerodynamics+forces%0D%0A%0D%0A++++++++++++++++if+(+params.enableWind+)+%7B%0D%0A%0D%0A++++++++++++++++++++var+indx%3B%0D%0A++++++++++++++++++++var+normal+%3D+new+THREE.Vector3()%3B%0D%0A++++++++++++++++++++var+indices+%3D+clothGeometry.index%3B%0D%0A++++++++++++++++++++var+normals+%3D+clothGeometry.attributes.normal%3B%0D%0A%0D%0A++++++++++++++++++++particles+%3D+cloth.particles%3B%0D%0A%0D%0A++++++++++++++++++++for+(+i+%3D+0%2C+il+%3D+indices.count%3B+i+%3C+il%3B+i+%2B%3D+3+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++for+(+j+%3D+0%3B+j+%3C+3%3B+j+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++++++indx+%3D+indices.getX(+i+%2B+j+)%3B%0D%0A++++++++++++++++++++++++++++normal.fromBufferAttribute(+normals%2C+indx+)%3B%0D%0A++++++++++++++++++++++++++++tmpForce.copy(+normal+).normalize().multiplyScalar(+normal.dot(+windForce+)+)%3B%0D%0A++++++++++++++++++++++++++++particles%5B+indx+%5D.addForce(+tmpForce+)%3B%0D%0A%0D%0A++++++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++for+(+particles+%3D+cloth.particles%2C+i+%3D+0%2C+il+%3D+particles.length%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++particle+%3D+particles%5B+i+%5D%3B%0D%0A++++++++++++++++++++particle.addForce(+gravity+)%3B%0D%0A%0D%0A++++++++++++++++++++particle.integrate(+TIMESTEP_SQ+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%2F%2F+Start+Constraints%0D%0A%0D%0A++++++++++++++++constraints+%3D+cloth.constraints%3B%0D%0A++++++++++++++++il+%3D+constraints.length%3B%0D%0A%0D%0A++++++++++++++++for+(+i+%3D+0%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++constraint+%3D+constraints%5B+i+%5D%3B%0D%0A++++++++++++++++++++satisfyConstraints(+constraint%5B+0+%5D%2C+constraint%5B+1+%5D%2C+constraint%5B+2+%5D+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%2F%2F+Ball+Constraints%0D%0A%0D%0A++++++++++++++++ballPosition.z+%3D+-+Math.sin(+Date.now()+%2F+600+)+*+90%3B+%2F%2F%2B+40%3B%0D%0A++++++++++++++++ballPosition.x+%3D+Math.cos(+Date.now()+%2F+400+)+*+70%3B%0D%0A%0D%0A++++++++++++++++if+(+params.showBall+)+%7B%0D%0A%0D%0A++++++++++++++++++++sphere.visible+%3D+true%3B%0D%0A%0D%0A++++++++++++++++++++for+(+particles+%3D+cloth.particles%2C+i+%3D+0%2C+il+%3D+particles.length%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++particle+%3D+particles%5B+i+%5D%3B%0D%0A++++++++++++++++++++++++var+pos+%3D+particle.position%3B%0D%0A++++++++++++++++++++++++diff.subVectors(+pos%2C+ballPosition+)%3B%0D%0A++++++++++++++++++++++++if+(+diff.length()+%3C+ballSize+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++++++%2F%2F+collided%0D%0A++++++++++++++++++++++++++++diff.normalize().multiplyScalar(+ballSize+)%3B%0D%0A++++++++++++++++++++++++++++pos.copy(+ballPosition+).add(+diff+)%3B%0D%0A%0D%0A++++++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%7D+else+%7B%0D%0A%0D%0A++++++++++++++++++++sphere.visible+%3D+false%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A%0D%0A++++++++++++++++%2F%2F+Floor+Constraints%0D%0A%0D%0A++++++++++++++++for+(+particles+%3D+cloth.particles%2C+i+%3D+0%2C+il+%3D+particles.length%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++particle+%3D+particles%5B+i+%5D%3B%0D%0A++++++++++++++++++++pos+%3D+particle.position%3B%0D%0A++++++++++++++++++++if+(+pos.y+%3C+-+250+)+%7B%0D%0A%0D%0A++++++++++++++++++++++++pos.y+%3D+-+250%3B%0D%0A%0D%0A++++++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++%2F%2F+Pin+Constraints%0D%0A%0D%0A++++++++++++++++for+(+i+%3D+0%2C+il+%3D+pins.length%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++var+xy+%3D+pins%5B+i+%5D%3B%0D%0A++++++++++++++++++++var+p+%3D+particles%5B+xy+%5D%3B%0D%0A++++++++++++++++++++p.position.copy(+p.original+)%3B%0D%0A++++++++++++++++++++p.previous.copy(+p.original+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++%2F*+testing+cloth+simulation+*%2F%0D%0A%0D%0A++++++++++++var+pinsFormation+%3D+%5B%5D%3B%0D%0A++++++++++++var+pins+%3D+%5B+6+%5D%3B%0D%0A%0D%0A++++++++++++pinsFormation.push(+pins+)%3B%0D%0A%0D%0A++++++++++++pins+%3D+%5B+0%2C+1%2C+2%2C+3%2C+4%2C+5%2C+6%2C+7%2C+8%2C+9%2C+10+%5D%3B%0D%0A++++++++++++pinsFormation.push(+pins+)%3B%0D%0A%0D%0A++++++++++++pins+%3D+%5B+0+%5D%3B%0D%0A++++++++++++pinsFormation.push(+pins+)%3B%0D%0A%0D%0A++++++++++++pins+%3D+%5B%5D%3B+%2F%2F+cut+the+rope+%3B)%0D%0A++++++++++++pinsFormation.push(+pins+)%3B%0D%0A%0D%0A++++++++++++pins+%3D+%5B+0%2C+cloth.w+%5D%3B+%2F%2F+classic+2+pins%0D%0A++++++++++++pinsFormation.push(+pins+)%3B%0D%0A%0D%0A++++++++++++pins+%3D+pinsFormation%5B+1+%5D%3B%0D%0A%0D%0A++++++++++++function+togglePins()+%7B%0D%0A%0D%0A++++++++++++++++pins+%3D+pinsFormation%5B+~+~+(+Math.random()+*+pinsFormation.length+)+%5D%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++var+container%2C+stats%3B%0D%0A++++++++++++var+camera%2C+scene%2C+renderer%3B%0D%0A%0D%0A++++++++++++var+clothGeometry%3B%0D%0A++++++++++++var+sphere%3B%0D%0A++++++++++++var+object%3B%0D%0A%0D%0A++++++++++++init()%3B%0D%0A++++++++++++animate()%3B%0D%0A%0D%0A++++++++++++function+init()+%7B%0D%0A%0D%0A++++++++++++++++container+%3D+document.createElement(+'div'+)%3B%0D%0A++++++++++++++++document.body.appendChild(+container+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+scene%0D%0A%0D%0A++++++++++++++++scene+%3D+new+THREE.Scene()%3B%0D%0A++++++++++++++++scene.background+%3D+new+THREE.Color(+0xcce0ff+)%3B%0D%0A++++++++++++++++scene.fog+%3D+new+THREE.Fog(+0xcce0ff%2C+500%2C+10000+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+camera%0D%0A%0D%0A++++++++++++++++camera+%3D+new+THREE.PerspectiveCamera(+30%2C+window.innerWidth+%2F+window.innerHeight%2C+1%2C+10000+)%3B%0D%0A++++++++++++++++camera.position.set(+1000%2C+50%2C+1500+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+lights%0D%0A%0D%0A++++++++++++++++scene.add(+new+THREE.AmbientLight(+0x666666+)+)%3B%0D%0A%0D%0A++++++++++++++++var+light+%3D+new+THREE.DirectionalLight(+0xdfebff%2C+1+)%3B%0D%0A++++++++++++++++light.position.set(+50%2C+200%2C+100+)%3B%0D%0A++++++++++++++++light.position.multiplyScalar(+1.3+)%3B%0D%0A%0D%0A++++++++++++++++light.castShadow+%3D+true%3B%0D%0A%0D%0A++++++++++++++++light.shadow.mapSize.width+%3D+1024%3B%0D%0A++++++++++++++++light.shadow.mapSize.height+%3D+1024%3B%0D%0A%0D%0A++++++++++++++++var+d+%3D+300%3B%0D%0A%0D%0A++++++++++++++++light.shadow.camera.left+%3D+-+d%3B%0D%0A++++++++++++++++light.shadow.camera.right+%3D+d%3B%0D%0A++++++++++++++++light.shadow.camera.top+%3D+d%3B%0D%0A++++++++++++++++light.shadow.camera.bottom+%3D+-+d%3B%0D%0A%0D%0A++++++++++++++++light.shadow.camera.far+%3D+1000%3B%0D%0A%0D%0A++++++++++++++++scene.add(+light+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+cloth+material%0D%0A%0D%0A++++++++++++++++var+loader+%3D+new+THREE.TextureLoader()%3B%0D%0A++++++++++++++++var+clothTexture+%3D+loader.load(+'textures%2Fpatterns%2Fcircuit_pattern.png'+)%3B%0D%0A++++++++++++++++clothTexture.anisotropy+%3D+16%3B%0D%0A%0D%0A++++++++++++++++var+clothMaterial+%3D+new+THREE.MeshLambertMaterial(+%7B%0D%0A++++++++++++++++++++map%3A+clothTexture%2C%0D%0A++++++++++++++++++++side%3A+THREE.DoubleSide%2C%0D%0A++++++++++++++++++++alphaTest%3A+0.5%0D%0A++++++++++++++++%7D+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+cloth+geometry%0D%0A%0D%0A++++++++++++++++clothGeometry+%3D+new+THREE.ParametricBufferGeometry(+clothFunction%2C+cloth.w%2C+cloth.h+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+cloth+mesh%0D%0A%0D%0A++++++++++++++++object+%3D+new+THREE.Mesh(+clothGeometry%2C+clothMaterial+)%3B%0D%0A++++++++++++++++object.position.set(+0%2C+0%2C+0+)%3B%0D%0A++++++++++++++++object.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+object+)%3B%0D%0A%0D%0A++++++++++++++++object.customDepthMaterial+%3D+new+THREE.MeshDepthMaterial(+%7B%0D%0A++++++++++++++++++++depthPacking%3A+THREE.RGBADepthPacking%2C%0D%0A++++++++++++++++++++map%3A+clothTexture%2C%0D%0A++++++++++++++++++++alphaTest%3A+0.5%0D%0A++++++++++++++++%7D+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+sphere%0D%0A%0D%0A++++++++++++++++var+ballGeo+%3D+new+THREE.SphereBufferGeometry(+ballSize%2C+32%2C+16+)%3B%0D%0A++++++++++++++++var+ballMaterial+%3D+new+THREE.MeshLambertMaterial()%3B%0D%0A%0D%0A++++++++++++++++sphere+%3D+new+THREE.Mesh(+ballGeo%2C+ballMaterial+)%3B%0D%0A++++++++++++++++sphere.castShadow+%3D+true%3B%0D%0A++++++++++++++++sphere.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++sphere.visible+%3D+false%3B%0D%0A++++++++++++++++scene.add(+sphere+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+ground%0D%0A%0D%0A++++++++++++++++var+groundTexture+%3D+loader.load(+'textures%2Fterrain%2Fgrasslight-big.jpg'+)%3B%0D%0A++++++++++++++++groundTexture.wrapS+%3D+groundTexture.wrapT+%3D+THREE.RepeatWrapping%3B%0D%0A++++++++++++++++groundTexture.repeat.set(+25%2C+25+)%3B%0D%0A++++++++++++++++groundTexture.anisotropy+%3D+16%3B%0D%0A++++++++++++++++groundTexture.encoding+%3D+THREE.sRGBEncoding%3B%0D%0A%0D%0A++++++++++++++++var+groundMaterial+%3D+new+THREE.MeshLambertMaterial(+%7B+map%3A+groundTexture+%7D+)%3B%0D%0A%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+new+THREE.PlaneBufferGeometry(+20000%2C+20000+)%2C+groundMaterial+)%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+250%3B%0D%0A++++++++++++++++mesh.rotation.x+%3D+-+Math.PI+%2F+2%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+poles%0D%0A%0D%0A++++++++++++++++var+poleGeo+%3D+new+THREE.BoxBufferGeometry(+5%2C+375%2C+5+)%3B%0D%0A++++++++++++++++var+poleMat+%3D+new+THREE.MeshLambertMaterial()%3B%0D%0A%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+poleGeo%2C+poleMat+)%3B%0D%0A++++++++++++++++mesh.position.x+%3D+-+125%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+62%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++mesh.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+poleGeo%2C+poleMat+)%3B%0D%0A++++++++++++++++mesh.position.x+%3D+125%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+62%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++mesh.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+new+THREE.BoxBufferGeometry(+255%2C+5%2C+5+)%2C+poleMat+)%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+250+%2B+(+750+%2F+2+)%3B%0D%0A++++++++++++++++mesh.position.x+%3D+0%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++mesh.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++var+gg+%3D+new+THREE.BoxBufferGeometry(+10%2C+10%2C+10+)%3B%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+gg%2C+poleMat+)%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+250%3B%0D%0A++++++++++++++++mesh.position.x+%3D+125%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++mesh.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++var+mesh+%3D+new+THREE.Mesh(+gg%2C+poleMat+)%3B%0D%0A++++++++++++++++mesh.position.y+%3D+-+250%3B%0D%0A++++++++++++++++mesh.position.x+%3D+-+125%3B%0D%0A++++++++++++++++mesh.receiveShadow+%3D+true%3B%0D%0A++++++++++++++++mesh.castShadow+%3D+true%3B%0D%0A++++++++++++++++scene.add(+mesh+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+renderer%0D%0A%0D%0A++++++++++++++++renderer+%3D+new+THREE.WebGLRenderer(+%7B+antialias%3A+true+%7D+)%3B%0D%0A++++++++++++++++renderer.setPixelRatio(+window.devicePixelRatio+)%3B%0D%0A++++++++++++++++renderer.setSize(+window.innerWidth%2C+window.innerHeight+)%3B%0D%0A%0D%0A++++++++++++++++container.appendChild(+renderer.domElement+)%3B%0D%0A%0D%0A++++++++++++++++renderer.outputEncoding+%3D+THREE.sRGBEncoding%3B%0D%0A%0D%0A++++++++++++++++renderer.shadowMap.enabled+%3D+true%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+controls%0D%0A++++++++++++++++var+controls+%3D+new+OrbitControls(+camera%2C+renderer.domElement+)%3B%0D%0A++++++++++++++++controls.maxPolarAngle+%3D+Math.PI+*+0.5%3B%0D%0A++++++++++++++++controls.minDistance+%3D+1000%3B%0D%0A++++++++++++++++controls.maxDistance+%3D+5000%3B%0D%0A%0D%0A++++++++++++++++%2F%2F+performance+monitor%0D%0A%0D%0A++++++++++++++++stats+%3D+new+Stats()%3B%0D%0A++++++++++++++++container.appendChild(+stats.dom+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F%0D%0A%0D%0A++++++++++++++++window.addEventListener(+'resize'%2C+onWindowResize%2C+false+)%3B%0D%0A%0D%0A++++++++++++++++%2F%2F%0D%0A%0D%0A++++++++++++++++var+gui+%3D+new+GUI()%3B%0D%0A++++++++++++++++gui.add(+params%2C+'enableWind'+)%3B%0D%0A++++++++++++++++gui.add(+params%2C+'showBall'+)%3B%0D%0A++++++++++++++++gui.add(+params%2C+'tooglePins'+)%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++%2F%2F%0D%0A%0D%0A++++++++++++function+onWindowResize()+%7B%0D%0A%0D%0A++++++++++++++++camera.aspect+%3D+window.innerWidth+%2F+window.innerHeight%3B%0D%0A++++++++++++++++camera.updateProjectionMatrix()%3B%0D%0A%0D%0A++++++++++++++++renderer.setSize(+window.innerWidth%2C+window.innerHeight+)%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++%2F%2F%0D%0A%0D%0A++++++++++++function+animate()+%7B%0D%0A%0D%0A++++++++++++++++requestAnimationFrame(+animate+)%3B%0D%0A%0D%0A++++++++++++++++var+time+%3D+Date.now()%3B%0D%0A%0D%0A++++++++++++++++var+windStrength+%3D+Math.cos(+time+%2F+7000+)+*+20+%2B+40%3B%0D%0A%0D%0A++++++++++++++++windForce.set(+Math.sin(+time+%2F+2000+)%2C+Math.cos(+time+%2F+3000+)%2C+Math.sin(+time+%2F+1000+)+)%3B%0D%0A++++++++++++++++windForce.normalize()%3B%0D%0A++++++++++++++++windForce.multiplyScalar(+windStrength+)%3B%0D%0A%0D%0A++++++++++++++++simulate(+time+)%3B%0D%0A++++++++++++++++render()%3B%0D%0A++++++++++++++++stats.update()%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++++++function+render()+%7B%0D%0A%0D%0A++++++++++++++++var+p+%3D+cloth.particles%3B%0D%0A%0D%0A++++++++++++++++for+(+var+i+%3D+0%2C+il+%3D+p.length%3B+i+%3C+il%3B+i+%2B%2B+)+%7B%0D%0A%0D%0A++++++++++++++++++++var+v+%3D+p%5B+i+%5D.position%3B%0D%0A%0D%0A++++++++++++++++++++clothGeometry.attributes.position.setXYZ(+i%2C+v.x%2C+v.y%2C+v.z+)%3B%0D%0A%0D%0A++++++++++++++++%7D%0D%0A%0D%0A++++++++++++++++clothGeometry.attributes.position.needsUpdate+%3D+true%3B%0D%0A%0D%0A++++++++++++++++clothGeometry.computeVertexNormals()%3B%0D%0A%0D%0A++++++++++++++++sphere.position.copy(+ballPosition+)%3B%0D%0A%0D%0A++++++++++++++++renderer.render(+scene%2C+camera+)%3B%0D%0A%0D%0A++++++++++++%7D%0D%0A%0D%0A++++++++%3C%2Fscript%3E%0D%0A++++%3C%2Fbody%3E%0D%0A%3C%2Fhtml%3E&body=%3Cp%3ELorem+ipsum+dolor+sit+amet%2C+consectetur+adipiscing+elit.+Nos+vero%2C+inquit+ille%3B+%3Ca+href%3D'http%3A%2F%2Floripsum.net%2F'+target%3D'_blank'%3ESed+quod+proximum+fuit+non+vidit.%3C%2Fa%3E+%3Ci%3EEa+possunt+paria+non+esse.%3C%2Fi%3E+Sullae+consulatum%3F+Duo+Reges%3A+constructio+interrete.+Haec+para%2Fdoca+illi%2C+nos+admirabilia+dicamus.+Idem+etiam+dolorem+saepe+perpetiuntur%2C+ne%2C+si+id+non+faciant%2C+incidant+in+maiorem.+%3C%2Fp%3E%0D%0A%0D%0A%3Col%3E%0D%0A++++%3Cli%3EQui+non+moveatur+et+offensione+turpitudinis+et+comprobatione+honestatis%3F%3C%2Fli%3E%0D%0A++++%3Cli%3ECum+autem+assumpta+rat%C3%ADo+est%2C+tanto+in+dominatu+locatur%2C+ut+omnia+illa+prima+naturae+hulus+tutelae+subiciantur.%3C%2Fli%3E%0D%0A++++%3Cli%3EIlla+tamen+simplicia%2C+vestra+versuta.%3C%2Fli%3E%0D%0A++++%3Cli%3EAc+ne+plura+complectar-sunt+enim+innumerabilia-%2C+bene+laudata+virtus+voluptatis+aditus+intercludat+necesse+est.%3C%2Fli%3E%0D%0A%3C%2Fol%3E%0D%0A%0D%0A%0D%0A%3Cp%3EIlle+igitur+vidit%2C+non+modo+quot+fuissent+adhuc+philosophorum+de+summo+bono%2C+sed+quot+omnino+esse+possent+sententiae.+%3Ci%3EQuid+est+enim+aliud+esse+versutum%3F%3C%2Fi%3E+%3Ca+href%3D'http%3A%2F%2Floripsum.net%2F'+target%3D'_blank'%3ECur+post+Tarentum+ad+Archytam%3F%3C%2Fa%3E+Nam+adhuc%2C+meo+fortasse+vitio%2C+quid+ego+quaeram+non+perspicis.+Nemo+igitur+esse+beatus+potest.+Nec+vero+pietas+adversus+deos+nec+quanta+iis+gratia+debeatur+sine+explicatione+naturae+intellegi+potest.+Immo+vero%2C+inquit%2C+ad+beatissime+vivendum+parum+est%2C+ad+beate+vero+satis.+Primum+in+nostrane+potestate+est%2C+quid+meminerimus%3F+%3C%2Fp%3E%0D%0A%0D%0A%3Cul%3E%0D%0A++++%3Cli%3EMulta+sunt+dicta+ab+antiquis+de+contemnendis+ac+despiciendis+rebus+humanis%3B%3C%2Fli%3E%0D%0A++++%3Cli%3EIn+voluptate+corporis-addam%2C+si+vis%2C+animi%2C+dum+ea+ipsa%2C+ut+vultis%2C+sit+e+corpore-situm+est+vivere+beate.%3C%2Fli%3E%0D%0A++++%3Cli%3EEt+quod+est+munus%2C+quod+opus+sapientiae%3F%3C%2Fli%3E%0D%0A++++%3Cli%3ENon+risu+potius+quam+oratione+eiciendum%3F%3C%2Fli%3E%0D%0A%3C%2Ful%3E%0D%0A%0D%0A%0D%0A%3Cp%3ECur+tantas+regiones+barbarorum+pedibus+obiit%2C+tot+maria+transmisit%3F+%3Cb%3EPauca+mutat+vel+plura+sane%3B%3C%2Fb%3E+%3Cmark%3EDeinde+dolorem+quem+maximum%3F%3C%2Fmark%3E+Ut+alios+omittam%2C+hunc+appello%2C+quem+ille+unum+secutus+est.+Qui+ita+affectus%2C+beatum+esse+numquam+probabis%3B+Quid+enim+de+amicitia+statueris+utilitatis+causa+expetenda+vides.+In+quibus+doctissimi+illi+veteres+inesse+quiddam+caeleste+et+divinum+putaverunt.+Materiam+vero+rerum+et+copiam+apud+hos+exilem%2C+apud+illos+uberrimam+reperiemus.+%3C%2Fp%3E&template=&taxonomy%5Bchapters%5D%5B%5D=main&taxonomy-order%5Bchapters%5D=724&editreferrer=&id=3&contenttype=pages&datepublish=2020-02-26+11%3A44%3A43&datedepublish=&status=published&ownerid=1&_live-editor-preview=";s:12:"content_type";s:16:"application/json";s:11:"status_text";s:2:"OK";s:11:"status_code";i:200;s:13:"request_query";a:1:{s:8:"returnto";s:4:"ajax";}s:15:"request_request";a:17:{s:15:"bolt_csrf_token";s:8:"ab864750";s:5:"title";s:13:"Animacion # 1";s:4:"slug";s:26:"pauca-mutat-vel-plura-sane";s:5:"image";a:1:{s:4:"file";s:19:"2020-03/captura.png";}s:6:"teaser";s:19965:"<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>three.js webgl - cloth simulation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="main.css">
+        <style>
+            body {
+                background-color: #cce0ff;
+                color: #000;
+            }
+            a {
+                color: #080;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="info">Simple Cloth Simulation<br/>
+            Verlet integration with relaxed constraints<br/>
+        </div>
+
+        <script type="module">
+
+            import * as THREE from '../build/three.module.js';
+
+            import Stats from './jsm/libs/stats.module.js';
+            import { GUI } from './jsm/libs/dat.gui.module.js';
+
+            import { OrbitControls } from './jsm/controls/OrbitControls.js';
+
+            /*
+             * Cloth Simulation using a relaxed constraints solver
+             */
+
+            // Suggested Readings
+
+            // Advanced Character Physics by Thomas Jakobsen Character
+            // http://freespace.virgin.net/hugo.elias/models/m_cloth.htm
+            // http://en.wikipedia.org/wiki/Cloth_modeling
+            // http://cg.alexandra.dk/tag/spring-mass-system/
+            // Real-time Cloth Animation http://www.darwin3d.com/gamedev/articles/col0599.pdf
+
+            var params = {
+                enableWind: true,
+                showBall: false,
+                tooglePins: togglePins
+            };
+
+            var DAMPING = 0.03;
+            var DRAG = 1 - DAMPING;
+            var MASS = 0.1;
+            var restDistance = 25;
+
+            var xSegs = 10;
+            var ySegs = 10;
+
+            var clothFunction = plane( restDistance * xSegs, restDistance * ySegs );
+
+            var cloth = new Cloth( xSegs, ySegs );
+
+            var GRAVITY = 981 * 1.4;
+            var gravity = new THREE.Vector3( 0, - GRAVITY, 0 ).multiplyScalar( MASS );
+
+
+            var TIMESTEP = 18 / 1000;
+            var TIMESTEP_SQ = TIMESTEP * TIMESTEP;
+
+            var pins = [];
+
+            var windForce = new THREE.Vector3( 0, 0, 0 );
+
+            var ballPosition = new THREE.Vector3( 0, - 45, 0 );
+            var ballSize = 60; //40
+
+            var tmpForce = new THREE.Vector3();
+
+            var lastTime;
+
+
+            function plane( width, height ) {
+
+                return function ( u, v, target ) {
+
+                    var x = ( u - 0.5 ) * width;
+                    var y = ( v + 0.5 ) * height;
+                    var z = 0;
+
+                    target.set( x, y, z );
+
+                };
+
+            }
+
+            function Particle( x, y, z, mass ) {
+
+                this.position = new THREE.Vector3();
+                this.previous = new THREE.Vector3();
+                this.original = new THREE.Vector3();
+                this.a = new THREE.Vector3( 0, 0, 0 ); // acceleration
+                this.mass = mass;
+                this.invMass = 1 / mass;
+                this.tmp = new THREE.Vector3();
+                this.tmp2 = new THREE.Vector3();
+
+                // init
+
+                clothFunction( x, y, this.position ); // position
+                clothFunction( x, y, this.previous ); // previous
+                clothFunction( x, y, this.original );
+
+            }
+
+            // Force -> Acceleration
+
+            Particle.prototype.addForce = function ( force ) {
+
+                this.a.add(
+                    this.tmp2.copy( force ).multiplyScalar( this.invMass )
+                );
+
+            };
+
+
+            // Performs Verlet integration
+
+            Particle.prototype.integrate = function ( timesq ) {
+
+                var newPos = this.tmp.subVectors( this.position, this.previous );
+                newPos.multiplyScalar( DRAG ).add( this.position );
+                newPos.add( this.a.multiplyScalar( timesq ) );
+
+                this.tmp = this.previous;
+                this.previous = this.position;
+                this.position = newPos;
+
+                this.a.set( 0, 0, 0 );
+
+            };
+
+
+            var diff = new THREE.Vector3();
+
+            function satisfyConstraints( p1, p2, distance ) {
+
+                diff.subVectors( p2.position, p1.position );
+                var currentDist = diff.length();
+                if ( currentDist === 0 ) return; // prevents division by 0
+                var correction = diff.multiplyScalar( 1 - distance / currentDist );
+                var correctionHalf = correction.multiplyScalar( 0.5 );
+                p1.position.add( correctionHalf );
+                p2.position.sub( correctionHalf );
+
+            }
+
+
+            function Cloth( w, h ) {
+
+                w = w || 10;
+                h = h || 10;
+                this.w = w;
+                this.h = h;
+
+                var particles = [];
+                var constraints = [];
+
+                var u, v;
+
+                // Create particles
+                for ( v = 0; v <= h; v ++ ) {
+
+                    for ( u = 0; u <= w; u ++ ) {
+
+                        particles.push(
+                            new Particle( u / w, v / h, 0, MASS )
+                        );
+
+                    }
+
+                }
+
+                // Structural
+
+                for ( v = 0; v < h; v ++ ) {
+
+                    for ( u = 0; u < w; u ++ ) {
+
+                        constraints.push( [
+                            particles[ index( u, v ) ],
+                            particles[ index( u, v + 1 ) ],
+                            restDistance
+                        ] );
+
+                        constraints.push( [
+                            particles[ index( u, v ) ],
+                            particles[ index( u + 1, v ) ],
+                            restDistance
+                        ] );
+
+                    }
+
+                }
+
+                for ( u = w, v = 0; v < h; v ++ ) {
+
+                    constraints.push( [
+                        particles[ index( u, v ) ],
+                        particles[ index( u, v + 1 ) ],
+                        restDistance
+
+                    ] );
+
+                }
+
+                for ( v = h, u = 0; u < w; u ++ ) {
+
+                    constraints.push( [
+                        particles[ index( u, v ) ],
+                        particles[ index( u + 1, v ) ],
+                        restDistance
+                    ] );
+
+                }
+
+
+                // While many systems use shear and bend springs,
+                // the relaxed constraints model seems to be just fine
+                // using structural springs.
+                // Shear
+                // var diagonalDist = Math.sqrt(restDistance * restDistance * 2);
+
+
+                // for (v=0;v<h;v++) {
+                //     for (u=0;u<w;u++) {
+
+                //         constraints.push([
+                //             particles[index(u, v)],
+                //             particles[index(u+1, v+1)],
+                //             diagonalDist
+                //         ]);
+
+                //         constraints.push([
+                //             particles[index(u+1, v)],
+                //             particles[index(u, v+1)],
+                //             diagonalDist
+                //         ]);
+
+                //     }
+                // }
+
+
+                this.particles = particles;
+                this.constraints = constraints;
+
+                function index( u, v ) {
+
+                    return u + v * ( w + 1 );
+
+                }
+
+                this.index = index;
+
+            }
+
+            function simulate( time ) {
+
+                if ( ! lastTime ) {
+
+                    lastTime = time;
+                    return;
+
+                }
+
+                var i, j, il, particles, particle, constraints, constraint;
+
+                // Aerodynamics forces
+
+                if ( params.enableWind ) {
+
+                    var indx;
+                    var normal = new THREE.Vector3();
+                    var indices = clothGeometry.index;
+                    var normals = clothGeometry.attributes.normal;
+
+                    particles = cloth.particles;
+
+                    for ( i = 0, il = indices.count; i < il; i += 3 ) {
+
+                        for ( j = 0; j < 3; j ++ ) {
+
+                            indx = indices.getX( i + j );
+                            normal.fromBufferAttribute( normals, indx );
+                            tmpForce.copy( normal ).normalize().multiplyScalar( normal.dot( windForce ) );
+                            particles[ indx ].addForce( tmpForce );
+
+                        }
+
+                    }
+
+                }
+
+                for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                    particle = particles[ i ];
+                    particle.addForce( gravity );
+
+                    particle.integrate( TIMESTEP_SQ );
+
+                }
+
+                // Start Constraints
+
+                constraints = cloth.constraints;
+                il = constraints.length;
+
+                for ( i = 0; i < il; i ++ ) {
+
+                    constraint = constraints[ i ];
+                    satisfyConstraints( constraint[ 0 ], constraint[ 1 ], constraint[ 2 ] );
+
+                }
+
+                // Ball Constraints
+
+                ballPosition.z = - Math.sin( Date.now() / 600 ) * 90; //+ 40;
+                ballPosition.x = Math.cos( Date.now() / 400 ) * 70;
+
+                if ( params.showBall ) {
+
+                    sphere.visible = true;
+
+                    for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                        particle = particles[ i ];
+                        var pos = particle.position;
+                        diff.subVectors( pos, ballPosition );
+                        if ( diff.length() < ballSize ) {
+
+                            // collided
+                            diff.normalize().multiplyScalar( ballSize );
+                            pos.copy( ballPosition ).add( diff );
+
+                        }
+
+                    }
+
+                } else {
+
+                    sphere.visible = false;
+
+                }
+
+
+                // Floor Constraints
+
+                for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                    particle = particles[ i ];
+                    pos = particle.position;
+                    if ( pos.y < - 250 ) {
+
+                        pos.y = - 250;
+
+                    }
+
+                }
+
+                // Pin Constraints
+
+                for ( i = 0, il = pins.length; i < il; i ++ ) {
+
+                    var xy = pins[ i ];
+                    var p = particles[ xy ];
+                    p.position.copy( p.original );
+                    p.previous.copy( p.original );
+
+                }
+
+
+            }
+
+            /* testing cloth simulation */
+
+            var pinsFormation = [];
+            var pins = [ 6 ];
+
+            pinsFormation.push( pins );
+
+            pins = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+            pinsFormation.push( pins );
+
+            pins = [ 0 ];
+            pinsFormation.push( pins );
+
+            pins = []; // cut the rope ;)
+            pinsFormation.push( pins );
+
+            pins = [ 0, cloth.w ]; // classic 2 pins
+            pinsFormation.push( pins );
+
+            pins = pinsFormation[ 1 ];
+
+            function togglePins() {
+
+                pins = pinsFormation[ ~ ~ ( Math.random() * pinsFormation.length ) ];
+
+            }
+
+            var container, stats;
+            var camera, scene, renderer;
+
+            var clothGeometry;
+            var sphere;
+            var object;
+
+            init();
+            animate();
+
+            function init() {
+
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+
+                // scene
+
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color( 0xcce0ff );
+                scene.fog = new THREE.Fog( 0xcce0ff, 500, 10000 );
+
+                // camera
+
+                camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+                camera.position.set( 1000, 50, 1500 );
+
+                // lights
+
+                scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+                var light = new THREE.DirectionalLight( 0xdfebff, 1 );
+                light.position.set( 50, 200, 100 );
+                light.position.multiplyScalar( 1.3 );
+
+                light.castShadow = true;
+
+                light.shadow.mapSize.width = 1024;
+                light.shadow.mapSize.height = 1024;
+
+                var d = 300;
+
+                light.shadow.camera.left = - d;
+                light.shadow.camera.right = d;
+                light.shadow.camera.top = d;
+                light.shadow.camera.bottom = - d;
+
+                light.shadow.camera.far = 1000;
+
+                scene.add( light );
+
+                // cloth material
+
+                var loader = new THREE.TextureLoader();
+                var clothTexture = loader.load( 'textures/patterns/circuit_pattern.png' );
+                clothTexture.anisotropy = 16;
+
+                var clothMaterial = new THREE.MeshLambertMaterial( {
+                    map: clothTexture,
+                    side: THREE.DoubleSide,
+                    alphaTest: 0.5
+                } );
+
+                // cloth geometry
+
+                clothGeometry = new THREE.ParametricBufferGeometry( clothFunction, cloth.w, cloth.h );
+
+                // cloth mesh
+
+                object = new THREE.Mesh( clothGeometry, clothMaterial );
+                object.position.set( 0, 0, 0 );
+                object.castShadow = true;
+                scene.add( object );
+
+                object.customDepthMaterial = new THREE.MeshDepthMaterial( {
+                    depthPacking: THREE.RGBADepthPacking,
+                    map: clothTexture,
+                    alphaTest: 0.5
+                } );
+
+                // sphere
+
+                var ballGeo = new THREE.SphereBufferGeometry( ballSize, 32, 16 );
+                var ballMaterial = new THREE.MeshLambertMaterial();
+
+                sphere = new THREE.Mesh( ballGeo, ballMaterial );
+                sphere.castShadow = true;
+                sphere.receiveShadow = true;
+                sphere.visible = false;
+                scene.add( sphere );
+
+                // ground
+
+                var groundTexture = loader.load( 'textures/terrain/grasslight-big.jpg' );
+                groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+                groundTexture.repeat.set( 25, 25 );
+                groundTexture.anisotropy = 16;
+                groundTexture.encoding = THREE.sRGBEncoding;
+
+                var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+
+                var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial );
+                mesh.position.y = - 250;
+                mesh.rotation.x = - Math.PI / 2;
+                mesh.receiveShadow = true;
+                scene.add( mesh );
+
+                // poles
+
+                var poleGeo = new THREE.BoxBufferGeometry( 5, 375, 5 );
+                var poleMat = new THREE.MeshLambertMaterial();
+
+                var mesh = new THREE.Mesh( poleGeo, poleMat );
+                mesh.position.x = - 125;
+                mesh.position.y = - 62;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( poleGeo, poleMat );
+                mesh.position.x = 125;
+                mesh.position.y = - 62;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 255, 5, 5 ), poleMat );
+                mesh.position.y = - 250 + ( 750 / 2 );
+                mesh.position.x = 0;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var gg = new THREE.BoxBufferGeometry( 10, 10, 10 );
+                var mesh = new THREE.Mesh( gg, poleMat );
+                mesh.position.y = - 250;
+                mesh.position.x = 125;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( gg, poleMat );
+                mesh.position.y = - 250;
+                mesh.position.x = - 125;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                // renderer
+
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+                container.appendChild( renderer.domElement );
+
+                renderer.outputEncoding = THREE.sRGBEncoding;
+
+                renderer.shadowMap.enabled = true;
+
+                // controls
+                var controls = new OrbitControls( camera, renderer.domElement );
+                controls.maxPolarAngle = Math.PI * 0.5;
+                controls.minDistance = 1000;
+                controls.maxDistance = 5000;
+
+                // performance monitor
+
+                stats = new Stats();
+                container.appendChild( stats.dom );
+
+                //
+
+                window.addEventListener( 'resize', onWindowResize, false );
+
+                //
+
+                var gui = new GUI();
+                gui.add( params, 'enableWind' );
+                gui.add( params, 'showBall' );
+                gui.add( params, 'tooglePins' );
+
+            }
+
+            //
+
+            function onWindowResize() {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+            }
+
+            //
+
+            function animate() {
+
+                requestAnimationFrame( animate );
+
+                var time = Date.now();
+
+                var windStrength = Math.cos( time / 7000 ) * 20 + 40;
+
+                windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) );
+                windForce.normalize();
+                windForce.multiplyScalar( windStrength );
+
+                simulate( time );
+                render();
+                stats.update();
+
+            }
+
+            function render() {
+
+                var p = cloth.particles;
+
+                for ( var i = 0, il = p.length; i < il; i ++ ) {
+
+                    var v = p[ i ].position;
+
+                    clothGeometry.attributes.position.setXYZ( i, v.x, v.y, v.z );
+
+                }
+
+                clothGeometry.attributes.position.needsUpdate = true;
+
+                clothGeometry.computeVertexNormals();
+
+                sphere.position.copy( ballPosition );
+
+                renderer.render( scene, camera );
+
+            }
+
+        </script>
+    </body>
+</html>";s:4:"body";s:2204:"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nos vero, inquit ille; <a href='http://loripsum.net/' target='_blank'>Sed quod proximum fuit non vidit.</a> <i>Ea possunt paria non esse.</i> Sullae consulatum? Duo Reges: constructio interrete. Haec para/doca illi, nos admirabilia dicamus. Idem etiam dolorem saepe perpetiuntur, ne, si id non faciant, incidant in maiorem. </p>
+
+<ol>
+    <li>Qui non moveatur et offensione turpitudinis et comprobatione honestatis?</li>
+    <li>Cum autem assumpta ratío est, tanto in dominatu locatur, ut omnia illa prima naturae hulus tutelae subiciantur.</li>
+    <li>Illa tamen simplicia, vestra versuta.</li>
+    <li>Ac ne plura complectar-sunt enim innumerabilia-, bene laudata virtus voluptatis aditus intercludat necesse est.</li>
+</ol>
+
+
+<p>Ille igitur vidit, non modo quot fuissent adhuc philosophorum de summo bono, sed quot omnino esse possent sententiae. <i>Quid est enim aliud esse versutum?</i> <a href='http://loripsum.net/' target='_blank'>Cur post Tarentum ad Archytam?</a> Nam adhuc, meo fortasse vitio, quid ego quaeram non perspicis. Nemo igitur esse beatus potest. Nec vero pietas adversus deos nec quanta iis gratia debeatur sine explicatione naturae intellegi potest. Immo vero, inquit, ad beatissime vivendum parum est, ad beate vero satis. Primum in nostrane potestate est, quid meminerimus? </p>
+
+<ul>
+    <li>Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis;</li>
+    <li>In voluptate corporis-addam, si vis, animi, dum ea ipsa, ut vultis, sit e corpore-situm est vivere beate.</li>
+    <li>Et quod est munus, quod opus sapientiae?</li>
+    <li>Non risu potius quam oratione eiciendum?</li>
+</ul>
+
+
+<p>Cur tantas regiones barbarorum pedibus obiit, tot maria transmisit? <b>Pauca mutat vel plura sane;</b> <mark>Deinde dolorem quem maximum?</mark> Ut alios omittam, hunc appello, quem ille unum secutus est. Qui ita affectus, beatum esse numquam probabis; Quid enim de amicitia statueris utilitatis causa expetenda vides. In quibus doctissimi illi veteres inesse quiddam caeleste et divinum putaverunt. Materiam vero rerum et copiam apud hos exilem, apud illos uberrimam reperiemus. </p>";s:8:"template";s:0:"";s:8:"taxonomy";a:1:{s:8:"chapters";a:1:{i:0;s:4:"main";}}s:14:"taxonomy-order";a:1:{s:8:"chapters";s:3:"724";}s:12:"editreferrer";s:0:"";s:2:"id";s:1:"3";s:11:"contenttype";s:5:"pages";s:11:"datepublish";s:19:"2020-02-26 11:44:43";s:13:"datedepublish";s:0:"";s:6:"status";s:9:"published";s:7:"ownerid";s:1:"1";s:20:"_live-editor-preview";s:0:"";}s:15:"request_headers";a:12:{s:12:"content-type";a:1:{i:0;s:48:"application/x-www-form-urlencoded; charset=UTF-8";}s:14:"content-length";a:1:{i:0;s:5:"27775";}s:4:"host";a:1:{i:0;s:19:"178.128.155.57:8080";}s:10:"connection";a:1:{i:0;s:10:"keep-alive";}s:6:"accept";a:1:{i:0;s:3:"*/*";}s:16:"x-requested-with";a:1:{i:0;s:14:"XMLHttpRequest";}s:10:"user-agent";a:1:{i:0;s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";}s:6:"origin";a:1:{i:0;s:26:"http://178.128.155.57:8080";}s:7:"referer";a:1:{i:0;s:51:"http://178.128.155.57:8080/bolt/editcontent/pages/3";}s:15:"accept-encoding";a:1:{i:0;s:13:"gzip, deflate";}s:15:"accept-language";a:1:{i:0;s:14:"es-ES,es;q=0.9";}s:6:"cookie";a:1:{i:0;s:200:"__utma=180267364.1775187234.1583185154.1583185154.1583185154.1; __utmc=180267364; __utmz=180267364.1583185154.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); bolt_session=kid69s78hpu3b8mee1jqa7hm05";}}s:14:"request_server";a:38:{s:11:"SYMFONY_ENV";s:0:"";s:4:"USER";s:5:"nginx";s:4:"HOME";s:25:"/var/www/localhost/htdocs";s:9:"FCGI_ROLE";s:9:"RESPONDER";s:12:"QUERY_STRING";s:13:"returnto=ajax";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"CONTENT_TYPE";s:48:"application/x-www-form-urlencoded; charset=UTF-8";s:14:"CONTENT_LENGTH";s:5:"27775";s:11:"SCRIPT_NAME";s:10:"/index.php";s:11:"REQUEST_URI";s:39:"/bolt/editcontent/pages/3?returnto=ajax";s:12:"DOCUMENT_URI";s:10:"/index.php";s:13:"DOCUMENT_ROOT";s:15:"/var/www/public";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_SOFTWARE";s:11:"nginx/1.8.1";s:11:"REMOTE_ADDR";s:13:"181.39.85.168";s:11:"REMOTE_PORT";s:5:"30731";s:11:"SERVER_ADDR";s:10:"172.17.0.2";s:11:"SERVER_PORT";s:2:"80";s:11:"SERVER_NAME";s:0:"";s:15:"REDIRECT_STATUS";s:3:"200";s:15:"SCRIPT_FILENAME";s:25:"/var/www/public/index.php";s:5:"HTTPS";s:3:"off";s:9:"HTTP_HOST";s:19:"178.128.155.57:8080";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:19:"HTTP_CONTENT_LENGTH";s:5:"27775";s:11:"HTTP_ACCEPT";s:3:"*/*";s:21:"HTTP_X_REQUESTED_WITH";s:14:"XMLHttpRequest";s:15:"HTTP_USER_AGENT";s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";s:17:"HTTP_CONTENT_TYPE";s:48:"application/x-www-form-urlencoded; charset=UTF-8";s:11:"HTTP_ORIGIN";s:26:"http://178.128.155.57:8080";s:12:"HTTP_REFERER";s:51:"http://178.128.155.57:8080/bolt/editcontent/pages/3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:20:"HTTP_ACCEPT_LANGUAGE";s:14:"es-ES,es;q=0.9";s:11:"HTTP_COOKIE";s:200:"__utma=180267364.1775187234.1583185154.1583185154.1583185154.1; __utmc=180267364; __utmz=180267364.1583185154.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); bolt_session=kid69s78hpu3b8mee1jqa7hm05";s:8:"PHP_SELF";s:10:"/index.php";s:18:"REQUEST_TIME_FLOAT";d:1583187252.98785;s:12:"REQUEST_TIME";i:1583187252;}s:15:"request_cookies";a:4:{s:6:"__utma";s:55:"180267364.1775187234.1583185154.1583185154.1583185154.1";s:6:"__utmc";s:9:"180267364";s:6:"__utmz";s:70:"180267364.1583185154.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)";s:12:"bolt_session";s:26:"kid69s78hpu3b8mee1jqa7hm05";}s:18:"request_attributes";a:6:{s:11:"_controller";s:57:"[0 => Object(Bolt\Controllers\Backend), 1 => editContent]";s:2:"id";s:1:"3";s:15:"contenttypeslug";s:5:"pages";s:6:"_route";s:11:"editcontent";s:13:"_route_params";a:2:{s:2:"id";s:1:"3";s:15:"contenttypeslug";s:5:"pages";}s:3:"app";s:24:"Object(Bolt\Application)";}s:16:"response_headers";a:4:{s:13:"cache-control";a:1:{i:0;s:8:"no-cache";}s:4:"date";a:1:{i:0;s:29:"Mon, 02 Mar 2020 22:14:13 GMT";}s:12:"content-type";a:1:{i:0;s:16:"application/json";}s:13:"x-debug-token";a:1:{i:0;s:6:"66bea5";}}s:16:"session_metadata";a:3:{s:7:"Created";s:29:"Mon, 02 Mar 20 21:56:41 +0000";s:9:"Last used";s:29:"Mon, 02 Mar 20 22:14:09 +0000";s:8:"Lifetime";s:1:"0";}s:18:"session_attributes";a:2:{s:7:"retreat";s:0:"";s:4:"user";a:16:{s:2:"id";s:1:"1";s:8:"username";s:5:"admin";s:8:"password";s:14:"**dontchange**";s:6:"lastip";s:9:"127.0.0.1";s:11:"displayname";s:13:"Administrator";s:5:"stack";s:2:"[]";s:7:"enabled";s:1:"1";s:14:"shadowpassword";s:0:"";s:11:"shadowtoken";s:0:"";s:12:"failedlogins";s:1:"0";s:5:"roles";a:2:{i:0;s:4:"root";i:1;s:8:"everyone";}s:5:"email";s:16:"test@example.com";s:8:"lastseen";s:19:"2014-10-31 21:28:25";s:14:"shadowvalidity";s:10:"1900-01-01";s:14:"throttleduntil";s:19:"0000-00-00 00:00:00";s:10:"sessionkey";s:32:"687ed56b25058139fad2126cdc74ee91";}}s:7:"flashes";a:0:{}s:9:"path_info";s:25:"/bolt/editcontent/pages/3";s:10:"controller";a:4:{s:5:"class";s:24:"Bolt\Controllers\Backend";s:6:"method";s:11:"editContent";s:4:"file";s:53:"/var/www/vendor/bolt/bolt/src/Controllers/Backend.php";s:4:"line";i:703;}s:6:"locale";s:5:"en_GB";}}s:9:"exception";C:65:"Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector":6:{a:0:{}}s:6:"events";C:61:"Symfony\Component\HttpKernel\DataCollector\EventDataCollector":10284:{a:2:{s:16:"called_listeners";a:18:{s:91:"kernel.request.Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:59:"Symfony\Component\HttpKernel\EventListener\ProfilerListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:99:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/ProfilerListener.php";s:4:"line";i:78;s:6:"pretty";s:76:"Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelRequest";}s:74:"kernel.request.Silex\Provider\SessionServiceProvider::onEarlyKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:37:"Silex\Provider\SessionServiceProvider";s:6:"method";s:20:"onEarlyKernelRequest";s:4:"file";s:73:"/var/www/vendor/silex/silex/src/Silex/Provider/SessionServiceProvider.php";s:4:"line";i:73;s:6:"pretty";s:59:"Silex\Provider\SessionServiceProvider::onEarlyKernelRequest";}s:91:"kernel.request.Symfony\Component\HttpKernel\EventListener\FragmentListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:59:"Symfony\Component\HttpKernel\EventListener\FragmentListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:99:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/FragmentListener.php";s:4:"line";i:56;s:6:"pretty";s:76:"Symfony\Component\HttpKernel\EventListener\FragmentListener::onKernelRequest";}s:89:"kernel.request.Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:57:"Symfony\Component\HttpKernel\EventListener\RouterListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:97:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/RouterListener.php";s:4:"line";i:104;s:6:"pretty";s:74:"Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelRequest";}s:71:"kernel.request.Bolt\EventListener\StorageEventListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:39:"Bolt\EventListener\StorageEventListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:68:"/var/www/vendor/bolt/bolt/src/EventListener/StorageEventListener.php";s:4:"line";i:41;s:6:"pretty";s:56:"Bolt\EventListener\StorageEventListener::onKernelRequest";}s:66:"kernel.request.Silex\EventListener\LocaleListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:34:"Silex\EventListener\LocaleListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:70:"/var/www/vendor/silex/silex/src/Silex/EventListener/LocaleListener.php";s:4:"line";i:36;s:6:"pretty";s:51:"Silex\EventListener\LocaleListener::onKernelRequest";}s:22:"kernel.request.closure";a:3:{s:5:"event";s:14:"kernel.request";s:4:"type";s:7:"Closure";s:6:"pretty";s:7:"closure";}s:70:"kernel.request.Silex\EventListener\MiddlewareListener::onKernelRequest";a:7:{s:5:"event";s:14:"kernel.request";s:4:"type";s:6:"Method";s:5:"class";s:38:"Silex\EventListener\MiddlewareListener";s:6:"method";s:15:"onKernelRequest";s:4:"file";s:74:"/var/www/vendor/silex/silex/src/Silex/EventListener/MiddlewareListener.php";s:4:"line";i:45;s:6:"pretty";s:55:"Silex\EventListener\MiddlewareListener::onKernelRequest";}s:75:"kernel.controller.Silex\EventListener\ConverterListener::onKernelController";a:7:{s:5:"event";s:17:"kernel.controller";s:4:"type";s:6:"Method";s:5:"class";s:37:"Silex\EventListener\ConverterListener";s:6:"method";s:18:"onKernelController";s:4:"file";s:73:"/var/www/vendor/silex/silex/src/Silex/EventListener/ConverterListener.php";s:4:"line";i:47;s:6:"pretty";s:57:"Silex\EventListener\ConverterListener::onKernelController";}s:101:"kernel.controller.Symfony\Component\HttpKernel\DataCollector\RequestDataCollector::onKernelController";a:7:{s:5:"event";s:17:"kernel.controller";s:4:"type";s:6:"Method";s:5:"class";s:63:"Symfony\Component\HttpKernel\DataCollector\RequestDataCollector";s:6:"method";s:18:"onKernelController";s:4:"file";s:103:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/DataCollector/RequestDataCollector.php";s:4:"line";i:284;s:6:"pretty";s:83:"Symfony\Component\HttpKernel\DataCollector\RequestDataCollector::onKernelController";}s:72:"kernel.response.Silex\EventListener\MiddlewareListener::onKernelResponse";a:7:{s:5:"event";s:15:"kernel.response";s:4:"type";s:6:"Method";s:5:"class";s:38:"Silex\EventListener\MiddlewareListener";s:6:"method";s:16:"onKernelResponse";s:4:"file";s:74:"/var/www/vendor/silex/silex/src/Silex/EventListener/MiddlewareListener.php";s:4:"line";i:70;s:6:"pretty";s:56:"Silex\EventListener\MiddlewareListener::onKernelResponse";}s:93:"kernel.response.Symfony\Component\HttpKernel\EventListener\ResponseListener::onKernelResponse";a:7:{s:5:"event";s:15:"kernel.response";s:4:"type";s:6:"Method";s:5:"class";s:59:"Symfony\Component\HttpKernel\EventListener\ResponseListener";s:6:"method";s:16:"onKernelResponse";s:4:"file";s:99:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/ResponseListener.php";s:4:"line";i:37;s:6:"pretty";s:77:"Symfony\Component\HttpKernel\EventListener\ResponseListener::onKernelResponse";}s:23:"kernel.response.closure";a:3:{s:5:"event";s:15:"kernel.response";s:4:"type";s:7:"Closure";s:6:"pretty";s:7:"closure";}s:88:"kernel.response.Symfony\Component\HttpKernel\EventListener\EsiListener::onKernelResponse";a:7:{s:5:"event";s:15:"kernel.response";s:4:"type";s:6:"Method";s:5:"class";s:54:"Symfony\Component\HttpKernel\EventListener\EsiListener";s:6:"method";s:16:"onKernelResponse";s:4:"file";s:100:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/SurrogateListener.php";s:4:"line";i:43;s:6:"pretty";s:72:"Symfony\Component\HttpKernel\EventListener\EsiListener::onKernelResponse";}s:93:"kernel.response.Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelResponse";a:7:{s:5:"event";s:15:"kernel.response";s:4:"type";s:6:"Method";s:5:"class";s:59:"Symfony\Component\HttpKernel\EventListener\ProfilerListener";s:6:"method";s:16:"onKernelResponse";s:4:"file";s:99:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/ProfilerListener.php";s:4:"line";i:90;s:6:"pretty";s:77:"Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelResponse";}s:104:"kernel.response.Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener::onKernelResponse";a:7:{s:5:"event";s:15:"kernel.response";s:4:"type";s:6:"Method";s:5:"class";s:70:"Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener";s:6:"method";s:16:"onKernelResponse";s:4:"file";s:118:"/var/www/vendor/symfony/web-profiler-bundle/Symfony/Bundle/WebProfilerBundle/EventListener/WebDebugToolbarListener.php";s:4:"line";i:59;s:6:"pretty";s:88:"Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener::onKernelResponse";}s:102:"kernel.finish_request.Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelFinishRequest";a:7:{s:5:"event";s:21:"kernel.finish_request";s:4:"type";s:6:"Method";s:5:"class";s:57:"Symfony\Component\HttpKernel\EventListener\RouterListener";s:6:"method";s:21:"onKernelFinishRequest";s:4:"file";s:97:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/RouterListener.php";s:4:"line";i:95;s:6:"pretty";s:80:"Symfony\Component\HttpKernel\EventListener\RouterListener::onKernelFinishRequest";}s:79:"kernel.finish_request.Silex\EventListener\LocaleListener::onKernelFinishRequest";a:7:{s:5:"event";s:21:"kernel.finish_request";s:4:"type";s:6:"Method";s:5:"class";s:34:"Silex\EventListener\LocaleListener";s:6:"method";s:21:"onKernelFinishRequest";s:4:"file";s:97:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/LocaleListener.php";s:4:"line";i:78;s:6:"pretty";s:57:"Silex\EventListener\LocaleListener::onKernelFinishRequest";}}s:20:"not_called_listeners";a:6:{s:82:"kernel.terminate.Symfony\Component\EventDispatcher\Debug\WrappedListener::__invoke";a:7:{s:5:"event";s:16:"kernel.terminate";s:4:"type";s:6:"Method";s:5:"class";s:55:"Symfony\Component\EventDispatcher\Debug\WrappedListener";s:6:"method";s:8:"__invoke";s:4:"file";s:100:"/var/www/vendor/symfony/event-dispatcher/Symfony/Component/EventDispatcher/Debug/WrappedListener.php";s:4:"line";i:55;s:6:"pretty";s:65:"Symfony\Component\EventDispatcher\Debug\WrappedListener::__invoke";}s:22:"kernel.request.closure";a:3:{s:5:"event";s:14:"kernel.request";s:4:"type";s:7:"Closure";s:6:"pretty";s:7:"closure";}s:95:"kernel.exception.Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelException";a:7:{s:5:"event";s:16:"kernel.exception";s:4:"type";s:6:"Method";s:5:"class";s:59:"Symfony\Component\HttpKernel\EventListener\ProfilerListener";s:6:"method";s:17:"onKernelException";s:4:"file";s:99:"/var/www/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/ProfilerListener.php";s:4:"line";i:66;s:6:"pretty";s:78:"Symfony\Component\HttpKernel\EventListener\ProfilerListener::onKernelException";}s:57:"kernel.exception.Silex\ExceptionListenerWrapper::__invoke";a:7:{s:5:"event";s:16:"kernel.exception";s:4:"type";s:6:"Method";s:5:"class";s:30:"Silex\ExceptionListenerWrapper";s:6:"method";s:8:"__invoke";s:4:"file";s:66:"/var/www/vendor/silex/silex/src/Silex/ExceptionListenerWrapper.php";s:4:"line";i:42;s:6:"pretty";s:40:"Silex\ExceptionListenerWrapper::__invoke";}s:53:"kernel.exception.Silex\ExceptionHandler::onSilexError";a:7:{s:5:"event";s:16:"kernel.exception";s:4:"type";s:6:"Method";s:5:"class";s:22:"Silex\ExceptionHandler";s:6:"method";s:12:"onSilexError";s:4:"file";s:58:"/var/www/vendor/silex/silex/src/Silex/ExceptionHandler.php";s:4:"line";i:40;s:6:"pretty";s:36:"Silex\ExceptionHandler::onSilexError";}s:70:"kernel.view.Silex\EventListener\StringToResponseListener::onKernelView";a:7:{s:5:"event";s:11:"kernel.view";s:4:"type";s:6:"Method";s:5:"class";s:44:"Silex\EventListener\StringToResponseListener";s:6:"method";s:12:"onKernelView";s:4:"file";s:80:"/var/www/vendor/silex/silex/src/Silex/EventListener/StringToResponseListener.php";s:4:"line";i:31;s:6:"pretty";s:58:"Silex\EventListener\StringToResponseListener::onKernelView";}}}}s:6:"logger";C:62:"Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector":6:{a:0:{}}s:4:"time";C:60:"Symfony\Component\HttpKernel\DataCollector\TimeDataCollector":17129:{a:2:{s:10:"start_time";d:1583187252987.8499;s:6:"events";a:23:{s:11:"__section__";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:2:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:157;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}i:1;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:162;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:163;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"default";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:14:"kernel.request";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"section";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:59:"Symfony\Component\HttpKernel\EventListener\ProfilerListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:3:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:0;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3670016;}i:1;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:157;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}i:2;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:162;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:163;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:37:"Silex\Provider\SessionServiceProvider";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:0;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3670016;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:59:"Symfony\Component\HttpKernel\EventListener\FragmentListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:0;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3670016;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:57:"Symfony\Component\HttpKernel\EventListener\RouterListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:0;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:2;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3670016;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:39:"Bolt\EventListener\StorageEventListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:2;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:14;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3932160;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:34:"Silex\EventListener\LocaleListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:14;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:14;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3932160;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:7:"Closure";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:5:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:14;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:19;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3932160;}i:1;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:19;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:20;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3932160;}i:2;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}i:3;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}i:4;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:162;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:162;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:15:"bolt.app.before";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:19;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:20;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:3932160;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"default";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:38:"Silex\EventListener\MiddlewareListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:2:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:20;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}i:1;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:19:"bolt.backend.before";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:20;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"default";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:17:"kernel.controller";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:54;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"section";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:37:"Silex\EventListener\ConverterListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:54;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:63:"Symfony\Component\HttpKernel\DataCollector\RequestDataCollector";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:54;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:54;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4718592;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:10:"controller";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:54;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"section";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:15:"bolt.getcontent";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:3:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:55;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:62;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4980736;}i:1;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:62;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:68;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:4980736;}i:2;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:144;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:151;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5505024;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:8:"doctrine";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:15:"kernel.response";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:157;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"section";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:59:"Symfony\Component\HttpKernel\EventListener\ResponseListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:14:"bolt.app.after";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"default";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:54:"Symfony\Component\HttpKernel\EventListener\EsiListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:153;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:153;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:5767168;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:70:"Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:157;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:157;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:14:"event_listener";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}s:16:"kernel.terminate";O:42:"Symfony\Component\Stopwatch\StopwatchEvent":4:{s:51:" Symfony\Component\Stopwatch\StopwatchEvent periods";a:1:{i:0;O:43:"Symfony\Component\Stopwatch\StopwatchPeriod":3:{s:50:" Symfony\Component\Stopwatch\StopwatchPeriod start";i:162;s:48:" Symfony\Component\Stopwatch\StopwatchPeriod end";i:163;s:51:" Symfony\Component\Stopwatch\StopwatchPeriod memory";i:6029312;}}s:50:" Symfony\Component\Stopwatch\StopwatchEvent origin";d:1583187253053.5;s:52:" Symfony\Component\Stopwatch\StopwatchEvent category";s:7:"section";s:51:" Symfony\Component\Stopwatch\StopwatchEvent started";a:0:{}}}}}s:6:"router";C:62:"Symfony\Component\HttpKernel\DataCollector\RouterDataCollector":51:{a:3:{s:8:"redirect";b:0;s:3:"url";N;s:5:"route";N;}}s:6:"memory";C:62:"Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector":61:{a:2:{s:6:"memory";i:6029312;s:12:"memory_limit";i:134217728;}}s:2:"db";C:40:"Bolt\DataCollector\DatabaseDataCollector":34977:{a:1:{s:7:"queries";a:41:{i:0;a:4:{s:3:"sql";s:86:"SELECT id FROM bolt_pages WHERE (status = :oldstatus) AND (datepublish < :currenttime)";s:6:"params";a:4:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:5:"timed";s:9:"newstatus";s:9:"published";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00049114227294921875;}i:1;a:4:{s:3:"sql";s:154:"SELECT id FROM bolt_pages WHERE (status = :oldstatus) AND (datedepublish <= :currenttime) AND (datedepublish > :zeroday) AND (datechanged < datedepublish)";s:6:"params";a:5:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:9:"published";s:9:"newstatus";s:4:"held";s:7:"zeroday";s:19:"1900-01-01 00:00:01";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00034999847412109375;}i:2;a:4:{s:3:"sql";s:88:"SELECT id FROM bolt_entries WHERE (status = :oldstatus) AND (datepublish < :currenttime)";s:6:"params";a:4:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:5:"timed";s:9:"newstatus";s:9:"published";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00025892257690429688;}i:3;a:4:{s:3:"sql";s:156:"SELECT id FROM bolt_entries WHERE (status = :oldstatus) AND (datedepublish <= :currenttime) AND (datedepublish > :zeroday) AND (datechanged < datedepublish)";s:6:"params";a:5:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:9:"published";s:9:"newstatus";s:4:"held";s:7:"zeroday";s:19:"1900-01-01 00:00:01";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00062203407287597656;}i:4;a:4:{s:3:"sql";s:90:"SELECT id FROM bolt_showcases WHERE (status = :oldstatus) AND (datepublish < :currenttime)";s:6:"params";a:4:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:5:"timed";s:9:"newstatus";s:9:"published";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00029397010803222656;}i:5;a:4:{s:3:"sql";s:158:"SELECT id FROM bolt_showcases WHERE (status = :oldstatus) AND (datedepublish <= :currenttime) AND (datedepublish > :zeroday) AND (datechanged < datedepublish)";s:6:"params";a:5:{s:11:"datechanged";s:19:"2020-03-02 22:14:13";s:9:"oldstatus";s:9:"published";s:9:"newstatus";s:4:"held";s:7:"zeroday";s:19:"1900-01-01 00:00:01";s:11:"currenttime";O:8:"DateTime":3:{s:4:"date";s:26:"2020-03-02 22:14:13.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}}s:5:"types";a:1:{s:11:"currenttime";s:8:"datetime";}s:11:"executionMS";d:0.00036001205444335938;}i:6;a:4:{s:3:"sql";s:24:"SELECT * FROM bolt_users";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00015401840209960938;}i:7;a:4:{s:3:"sql";s:79:"SELECT id FROM bolt_authtoken WHERE username=? AND ip=? AND useragent=? LIMIT 1";s:6:"params";a:3:{i:0;s:5:"admin";i:1;s:13:"181.39.85.168";i:2;s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";}s:5:"types";a:1:{i:0;i:2;}s:11:"executionMS";d:0.00024509429931640625;}i:8;a:4:{s:3:"sql";s:123:"UPDATE bolt_authtoken SET username = ?, token = ?, salt = ?, validity = ?, ip = ?, lastseen = ?, useragent = ? WHERE id = ?";s:6:"params";a:8:{i:0;s:5:"admin";i:1;s:32:"48497e502c289ddfecd3a7413cc40dd9";i:2;s:12:"GqNZ+snL31vR";i:3;s:19:"2020-03-16 22:14:13";i:4;s:13:"181.39.85.168";i:5;s:19:"2020-03-02 22:14:13";i:6;s:115:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";i:7;s:1:"2";}s:5:"types";a:0:{}s:11:"executionMS";d:0.00036191940307617188;}i:9;a:4:{s:3:"sql";s:223:"SELECT name FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' AND name != 'geometry_columns' AND name != 'spatial_ref_sys' UNION ALL SELECT name FROM sqlite_temp_master WHERE type = 'table' ORDER BY name";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00024104118347167969;}i:10;a:4:{s:3:"sql";s:137:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_authtoken'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00025391578674316406;}i:11;a:4:{s:3:"sql";s:145:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_content_changelog'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00016808509826660156;}i:12;a:4:{s:3:"sql";s:132:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_cron'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00049710273742675781;}i:13;a:4:{s:3:"sql";s:135:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_entries'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00018787384033203125;}i:14;a:4:{s:3:"sql";s:131:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_log'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00017595291137695312;}i:15;a:4:{s:3:"sql";s:138:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_log_change'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00018405914306640625;}i:16;a:4:{s:3:"sql";s:138:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_log_system'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00016903877258300781;}i:17;a:4:{s:3:"sql";s:133:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_pages'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00017905235290527344;}i:18;a:4:{s:3:"sql";s:137:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_relations'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00017094612121582031;}i:19;a:4:{s:3:"sql";s:137:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_showcases'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00019907951354980469;}i:20;a:4:{s:3:"sql";s:136:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_taxonomy'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00017690658569335938;}i:21;a:4:{s:3:"sql";s:133:"SELECT sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type = 'table' AND name = 'bolt_users'";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00017905235290527344;}i:22;a:4:{s:3:"sql";s:41:"SELECT COUNT(id) as count FROM bolt_users";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00013995170593261719;}i:23;a:4:{s:3:"sql";s:45:"SELECT enabled FROM bolt_users WHERE id = :id";s:6:"params";a:1:{s:3:":id";s:1:"1";}s:5:"types";a:0:{}s:11:"executionMS";d:0.00015616416931152344;}i:24;a:4:{s:3:"sql";s:76:"SELECT count(*) FROM sqlite_master WHERE type='table' AND name='bolt_pages';";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.000247955322265625;}i:25;a:4:{s:3:"sql";s:142:"SELECT bolt_pages.* FROM bolt_pages WHERE ("bolt_pages"."status" != 'undefined' AND "bolt_pages"."id" = '3') ORDER BY datepublish DESC LIMIT 1";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00023388862609863281;}i:26;a:4:{s:3:"sql";s:142:"SELECT bolt_pages.* FROM bolt_pages WHERE ("bolt_pages"."id" = '3' AND "bolt_pages"."status" != 'undefined') ORDER BY datepublish DESC LIMIT 1";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00029206275939941406;}i:27;a:4:{s:3:"sql";s:93:"SELECT * FROM bolt_taxonomy WHERE content_id IN (?) AND contenttype=? AND taxonomytype IN (?)";s:6:"params";a:3:{i:0;a:1:{i:3;s:1:"3";}i:1;s:5:"pages";i:2;a:3:{i:0;s:4:"tags";i:1;s:8:"chapters";i:2;s:10:"categories";}}s:5:"types";a:3:{i:0;i:101;i:1;i:2;i:2;i:102;}s:11:"executionMS";d:0.00034403800964355469;}i:28;a:4:{s:3:"sql";s:84:"SELECT * FROM bolt_relations WHERE from_contenttype=? AND from_id IN (?) ORDER BY id";s:6:"params";a:2:{i:0;s:5:"pages";i:1;a:1:{i:3;s:1:"3";}}s:5:"types";a:2:{i:0;i:2;i:1;i:101;}s:11:"executionMS";d:0.00024008750915527344;}i:29;a:4:{s:3:"sql";s:80:"SELECT * FROM bolt_relations WHERE to_contenttype=? AND to_id IN (?) ORDER BY id";s:6:"params";a:2:{i:0;s:5:"pages";i:1;a:1:{i:3;s:1:"3";}}s:5:"types";a:2:{i:0;i:2;i:1;i:101;}s:11:"executionMS";d:0.00017404556274414062;}i:30;a:4:{s:3:"sql";s:48:"SELECT id from bolt_pages WHERE slug=? and id!=?";s:6:"params";a:2:{i:0;s:26:"pauca-mutat-vel-plura-sane";i:1;i:3;}s:5:"types";a:2:{i:0;i:2;i:1;i:1;}s:11:"executionMS";d:0.00022387504577636719;}i:31;a:4:{s:3:"sql";s:37:"SELECT * FROM bolt_pages WHERE id = ?";s:6:"params";a:1:{i:0;s:1:"3";}s:5:"types";a:0:{}s:11:"executionMS";d:0.00022816658020019531;}i:32;a:4:{s:3:"sql";s:224:"UPDATE bolt_pages SET datechanged = ?, id = ?, slug = ?, datecreated = ?, ownerid = ?, status = ?, title = ?, image = ?, teaser = ?, body = ?, template = ?, datepublish = ?, datedepublish = ?, templatefields = ? WHERE id = ?";s:6:"params";a:15:{i:0;s:19:"2020-03-02 22:14:13";i:1;s:1:"3";i:2;s:26:"pauca-mutat-vel-plura-sane";i:3;s:19:"2020-03-02 22:10:05";i:4;s:1:"1";i:5;s:9:"published";i:6;s:13:"Animacion # 1";i:7;s:31:"{"file":"2020-03\/captura.png"}";i:8;s:19965:"<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>three.js webgl - cloth simulation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="main.css">
+        <style>
+            body {
+                background-color: #cce0ff;
+                color: #000;
+            }
+            a {
+                color: #080;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="info">Simple Cloth Simulation<br/>
+            Verlet integration with relaxed constraints<br/>
+        </div>
+
+        <script type="module">
+
+            import * as THREE from '../build/three.module.js';
+
+            import Stats from './jsm/libs/stats.module.js';
+            import { GUI } from './jsm/libs/dat.gui.module.js';
+
+            import { OrbitControls } from './jsm/controls/OrbitControls.js';
+
+            /*
+             * Cloth Simulation using a relaxed constraints solver
+             */
+
+            // Suggested Readings
+
+            // Advanced Character Physics by Thomas Jakobsen Character
+            // http://freespace.virgin.net/hugo.elias/models/m_cloth.htm
+            // http://en.wikipedia.org/wiki/Cloth_modeling
+            // http://cg.alexandra.dk/tag/spring-mass-system/
+            // Real-time Cloth Animation http://www.darwin3d.com/gamedev/articles/col0599.pdf
+
+            var params = {
+                enableWind: true,
+                showBall: false,
+                tooglePins: togglePins
+            };
+
+            var DAMPING = 0.03;
+            var DRAG = 1 - DAMPING;
+            var MASS = 0.1;
+            var restDistance = 25;
+
+            var xSegs = 10;
+            var ySegs = 10;
+
+            var clothFunction = plane( restDistance * xSegs, restDistance * ySegs );
+
+            var cloth = new Cloth( xSegs, ySegs );
+
+            var GRAVITY = 981 * 1.4;
+            var gravity = new THREE.Vector3( 0, - GRAVITY, 0 ).multiplyScalar( MASS );
+
+
+            var TIMESTEP = 18 / 1000;
+            var TIMESTEP_SQ = TIMESTEP * TIMESTEP;
+
+            var pins = [];
+
+            var windForce = new THREE.Vector3( 0, 0, 0 );
+
+            var ballPosition = new THREE.Vector3( 0, - 45, 0 );
+            var ballSize = 60; //40
+
+            var tmpForce = new THREE.Vector3();
+
+            var lastTime;
+
+
+            function plane( width, height ) {
+
+                return function ( u, v, target ) {
+
+                    var x = ( u - 0.5 ) * width;
+                    var y = ( v + 0.5 ) * height;
+                    var z = 0;
+
+                    target.set( x, y, z );
+
+                };
+
+            }
+
+            function Particle( x, y, z, mass ) {
+
+                this.position = new THREE.Vector3();
+                this.previous = new THREE.Vector3();
+                this.original = new THREE.Vector3();
+                this.a = new THREE.Vector3( 0, 0, 0 ); // acceleration
+                this.mass = mass;
+                this.invMass = 1 / mass;
+                this.tmp = new THREE.Vector3();
+                this.tmp2 = new THREE.Vector3();
+
+                // init
+
+                clothFunction( x, y, this.position ); // position
+                clothFunction( x, y, this.previous ); // previous
+                clothFunction( x, y, this.original );
+
+            }
+
+            // Force -> Acceleration
+
+            Particle.prototype.addForce = function ( force ) {
+
+                this.a.add(
+                    this.tmp2.copy( force ).multiplyScalar( this.invMass )
+                );
+
+            };
+
+
+            // Performs Verlet integration
+
+            Particle.prototype.integrate = function ( timesq ) {
+
+                var newPos = this.tmp.subVectors( this.position, this.previous );
+                newPos.multiplyScalar( DRAG ).add( this.position );
+                newPos.add( this.a.multiplyScalar( timesq ) );
+
+                this.tmp = this.previous;
+                this.previous = this.position;
+                this.position = newPos;
+
+                this.a.set( 0, 0, 0 );
+
+            };
+
+
+            var diff = new THREE.Vector3();
+
+            function satisfyConstraints( p1, p2, distance ) {
+
+                diff.subVectors( p2.position, p1.position );
+                var currentDist = diff.length();
+                if ( currentDist === 0 ) return; // prevents division by 0
+                var correction = diff.multiplyScalar( 1 - distance / currentDist );
+                var correctionHalf = correction.multiplyScalar( 0.5 );
+                p1.position.add( correctionHalf );
+                p2.position.sub( correctionHalf );
+
+            }
+
+
+            function Cloth( w, h ) {
+
+                w = w || 10;
+                h = h || 10;
+                this.w = w;
+                this.h = h;
+
+                var particles = [];
+                var constraints = [];
+
+                var u, v;
+
+                // Create particles
+                for ( v = 0; v <= h; v ++ ) {
+
+                    for ( u = 0; u <= w; u ++ ) {
+
+                        particles.push(
+                            new Particle( u / w, v / h, 0, MASS )
+                        );
+
+                    }
+
+                }
+
+                // Structural
+
+                for ( v = 0; v < h; v ++ ) {
+
+                    for ( u = 0; u < w; u ++ ) {
+
+                        constraints.push( [
+                            particles[ index( u, v ) ],
+                            particles[ index( u, v + 1 ) ],
+                            restDistance
+                        ] );
+
+                        constraints.push( [
+                            particles[ index( u, v ) ],
+                            particles[ index( u + 1, v ) ],
+                            restDistance
+                        ] );
+
+                    }
+
+                }
+
+                for ( u = w, v = 0; v < h; v ++ ) {
+
+                    constraints.push( [
+                        particles[ index( u, v ) ],
+                        particles[ index( u, v + 1 ) ],
+                        restDistance
+
+                    ] );
+
+                }
+
+                for ( v = h, u = 0; u < w; u ++ ) {
+
+                    constraints.push( [
+                        particles[ index( u, v ) ],
+                        particles[ index( u + 1, v ) ],
+                        restDistance
+                    ] );
+
+                }
+
+
+                // While many systems use shear and bend springs,
+                // the relaxed constraints model seems to be just fine
+                // using structural springs.
+                // Shear
+                // var diagonalDist = Math.sqrt(restDistance * restDistance * 2);
+
+
+                // for (v=0;v<h;v++) {
+                //     for (u=0;u<w;u++) {
+
+                //         constraints.push([
+                //             particles[index(u, v)],
+                //             particles[index(u+1, v+1)],
+                //             diagonalDist
+                //         ]);
+
+                //         constraints.push([
+                //             particles[index(u+1, v)],
+                //             particles[index(u, v+1)],
+                //             diagonalDist
+                //         ]);
+
+                //     }
+                // }
+
+
+                this.particles = particles;
+                this.constraints = constraints;
+
+                function index( u, v ) {
+
+                    return u + v * ( w + 1 );
+
+                }
+
+                this.index = index;
+
+            }
+
+            function simulate( time ) {
+
+                if ( ! lastTime ) {
+
+                    lastTime = time;
+                    return;
+
+                }
+
+                var i, j, il, particles, particle, constraints, constraint;
+
+                // Aerodynamics forces
+
+                if ( params.enableWind ) {
+
+                    var indx;
+                    var normal = new THREE.Vector3();
+                    var indices = clothGeometry.index;
+                    var normals = clothGeometry.attributes.normal;
+
+                    particles = cloth.particles;
+
+                    for ( i = 0, il = indices.count; i < il; i += 3 ) {
+
+                        for ( j = 0; j < 3; j ++ ) {
+
+                            indx = indices.getX( i + j );
+                            normal.fromBufferAttribute( normals, indx );
+                            tmpForce.copy( normal ).normalize().multiplyScalar( normal.dot( windForce ) );
+                            particles[ indx ].addForce( tmpForce );
+
+                        }
+
+                    }
+
+                }
+
+                for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                    particle = particles[ i ];
+                    particle.addForce( gravity );
+
+                    particle.integrate( TIMESTEP_SQ );
+
+                }
+
+                // Start Constraints
+
+                constraints = cloth.constraints;
+                il = constraints.length;
+
+                for ( i = 0; i < il; i ++ ) {
+
+                    constraint = constraints[ i ];
+                    satisfyConstraints( constraint[ 0 ], constraint[ 1 ], constraint[ 2 ] );
+
+                }
+
+                // Ball Constraints
+
+                ballPosition.z = - Math.sin( Date.now() / 600 ) * 90; //+ 40;
+                ballPosition.x = Math.cos( Date.now() / 400 ) * 70;
+
+                if ( params.showBall ) {
+
+                    sphere.visible = true;
+
+                    for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                        particle = particles[ i ];
+                        var pos = particle.position;
+                        diff.subVectors( pos, ballPosition );
+                        if ( diff.length() < ballSize ) {
+
+                            // collided
+                            diff.normalize().multiplyScalar( ballSize );
+                            pos.copy( ballPosition ).add( diff );
+
+                        }
+
+                    }
+
+                } else {
+
+                    sphere.visible = false;
+
+                }
+
+
+                // Floor Constraints
+
+                for ( particles = cloth.particles, i = 0, il = particles.length; i < il; i ++ ) {
+
+                    particle = particles[ i ];
+                    pos = particle.position;
+                    if ( pos.y < - 250 ) {
+
+                        pos.y = - 250;
+
+                    }
+
+                }
+
+                // Pin Constraints
+
+                for ( i = 0, il = pins.length; i < il; i ++ ) {
+
+                    var xy = pins[ i ];
+                    var p = particles[ xy ];
+                    p.position.copy( p.original );
+                    p.previous.copy( p.original );
+
+                }
+
+
+            }
+
+            /* testing cloth simulation */
+
+            var pinsFormation = [];
+            var pins = [ 6 ];
+
+            pinsFormation.push( pins );
+
+            pins = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+            pinsFormation.push( pins );
+
+            pins = [ 0 ];
+            pinsFormation.push( pins );
+
+            pins = []; // cut the rope ;)
+            pinsFormation.push( pins );
+
+            pins = [ 0, cloth.w ]; // classic 2 pins
+            pinsFormation.push( pins );
+
+            pins = pinsFormation[ 1 ];
+
+            function togglePins() {
+
+                pins = pinsFormation[ ~ ~ ( Math.random() * pinsFormation.length ) ];
+
+            }
+
+            var container, stats;
+            var camera, scene, renderer;
+
+            var clothGeometry;
+            var sphere;
+            var object;
+
+            init();
+            animate();
+
+            function init() {
+
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+
+                // scene
+
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color( 0xcce0ff );
+                scene.fog = new THREE.Fog( 0xcce0ff, 500, 10000 );
+
+                // camera
+
+                camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+                camera.position.set( 1000, 50, 1500 );
+
+                // lights
+
+                scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+                var light = new THREE.DirectionalLight( 0xdfebff, 1 );
+                light.position.set( 50, 200, 100 );
+                light.position.multiplyScalar( 1.3 );
+
+                light.castShadow = true;
+
+                light.shadow.mapSize.width = 1024;
+                light.shadow.mapSize.height = 1024;
+
+                var d = 300;
+
+                light.shadow.camera.left = - d;
+                light.shadow.camera.right = d;
+                light.shadow.camera.top = d;
+                light.shadow.camera.bottom = - d;
+
+                light.shadow.camera.far = 1000;
+
+                scene.add( light );
+
+                // cloth material
+
+                var loader = new THREE.TextureLoader();
+                var clothTexture = loader.load( 'textures/patterns/circuit_pattern.png' );
+                clothTexture.anisotropy = 16;
+
+                var clothMaterial = new THREE.MeshLambertMaterial( {
+                    map: clothTexture,
+                    side: THREE.DoubleSide,
+                    alphaTest: 0.5
+                } );
+
+                // cloth geometry
+
+                clothGeometry = new THREE.ParametricBufferGeometry( clothFunction, cloth.w, cloth.h );
+
+                // cloth mesh
+
+                object = new THREE.Mesh( clothGeometry, clothMaterial );
+                object.position.set( 0, 0, 0 );
+                object.castShadow = true;
+                scene.add( object );
+
+                object.customDepthMaterial = new THREE.MeshDepthMaterial( {
+                    depthPacking: THREE.RGBADepthPacking,
+                    map: clothTexture,
+                    alphaTest: 0.5
+                } );
+
+                // sphere
+
+                var ballGeo = new THREE.SphereBufferGeometry( ballSize, 32, 16 );
+                var ballMaterial = new THREE.MeshLambertMaterial();
+
+                sphere = new THREE.Mesh( ballGeo, ballMaterial );
+                sphere.castShadow = true;
+                sphere.receiveShadow = true;
+                sphere.visible = false;
+                scene.add( sphere );
+
+                // ground
+
+                var groundTexture = loader.load( 'textures/terrain/grasslight-big.jpg' );
+                groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+                groundTexture.repeat.set( 25, 25 );
+                groundTexture.anisotropy = 16;
+                groundTexture.encoding = THREE.sRGBEncoding;
+
+                var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+
+                var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial );
+                mesh.position.y = - 250;
+                mesh.rotation.x = - Math.PI / 2;
+                mesh.receiveShadow = true;
+                scene.add( mesh );
+
+                // poles
+
+                var poleGeo = new THREE.BoxBufferGeometry( 5, 375, 5 );
+                var poleMat = new THREE.MeshLambertMaterial();
+
+                var mesh = new THREE.Mesh( poleGeo, poleMat );
+                mesh.position.x = - 125;
+                mesh.position.y = - 62;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( poleGeo, poleMat );
+                mesh.position.x = 125;
+                mesh.position.y = - 62;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 255, 5, 5 ), poleMat );
+                mesh.position.y = - 250 + ( 750 / 2 );
+                mesh.position.x = 0;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var gg = new THREE.BoxBufferGeometry( 10, 10, 10 );
+                var mesh = new THREE.Mesh( gg, poleMat );
+                mesh.position.y = - 250;
+                mesh.position.x = 125;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                var mesh = new THREE.Mesh( gg, poleMat );
+                mesh.position.y = - 250;
+                mesh.position.x = - 125;
+                mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                scene.add( mesh );
+
+                // renderer
+
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+                container.appendChild( renderer.domElement );
+
+                renderer.outputEncoding = THREE.sRGBEncoding;
+
+                renderer.shadowMap.enabled = true;
+
+                // controls
+                var controls = new OrbitControls( camera, renderer.domElement );
+                controls.maxPolarAngle = Math.PI * 0.5;
+                controls.minDistance = 1000;
+                controls.maxDistance = 5000;
+
+                // performance monitor
+
+                stats = new Stats();
+                container.appendChild( stats.dom );
+
+                //
+
+                window.addEventListener( 'resize', onWindowResize, false );
+
+                //
+
+                var gui = new GUI();
+                gui.add( params, 'enableWind' );
+                gui.add( params, 'showBall' );
+                gui.add( params, 'tooglePins' );
+
+            }
+
+            //
+
+            function onWindowResize() {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+            }
+
+            //
+
+            function animate() {
+
+                requestAnimationFrame( animate );
+
+                var time = Date.now();
+
+                var windStrength = Math.cos( time / 7000 ) * 20 + 40;
+
+                windForce.set( Math.sin( time / 2000 ), Math.cos( time / 3000 ), Math.sin( time / 1000 ) );
+                windForce.normalize();
+                windForce.multiplyScalar( windStrength );
+
+                simulate( time );
+                render();
+                stats.update();
+
+            }
+
+            function render() {
+
+                var p = cloth.particles;
+
+                for ( var i = 0, il = p.length; i < il; i ++ ) {
+
+                    var v = p[ i ].position;
+
+                    clothGeometry.attributes.position.setXYZ( i, v.x, v.y, v.z );
+
+                }
+
+                clothGeometry.attributes.position.needsUpdate = true;
+
+                clothGeometry.computeVertexNormals();
+
+                sphere.position.copy( ballPosition );
+
+                renderer.render( scene, camera );
+
+            }
+
+        </script>
+    </body>
+</html>";i:9;s:2204:"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nos vero, inquit ille; <a href='http://loripsum.net/' target='_blank'>Sed quod proximum fuit non vidit.</a> <i>Ea possunt paria non esse.</i> Sullae consulatum? Duo Reges: constructio interrete. Haec para/doca illi, nos admirabilia dicamus. Idem etiam dolorem saepe perpetiuntur, ne, si id non faciant, incidant in maiorem. </p>
+
+<ol>
+    <li>Qui non moveatur et offensione turpitudinis et comprobatione honestatis?</li>
+    <li>Cum autem assumpta ratío est, tanto in dominatu locatur, ut omnia illa prima naturae hulus tutelae subiciantur.</li>
+    <li>Illa tamen simplicia, vestra versuta.</li>
+    <li>Ac ne plura complectar-sunt enim innumerabilia-, bene laudata virtus voluptatis aditus intercludat necesse est.</li>
+</ol>
+
+
+<p>Ille igitur vidit, non modo quot fuissent adhuc philosophorum de summo bono, sed quot omnino esse possent sententiae. <i>Quid est enim aliud esse versutum?</i> <a href='http://loripsum.net/' target='_blank'>Cur post Tarentum ad Archytam?</a> Nam adhuc, meo fortasse vitio, quid ego quaeram non perspicis. Nemo igitur esse beatus potest. Nec vero pietas adversus deos nec quanta iis gratia debeatur sine explicatione naturae intellegi potest. Immo vero, inquit, ad beatissime vivendum parum est, ad beate vero satis. Primum in nostrane potestate est, quid meminerimus? </p>
+
+<ul>
+    <li>Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis;</li>
+    <li>In voluptate corporis-addam, si vis, animi, dum ea ipsa, ut vultis, sit e corpore-situm est vivere beate.</li>
+    <li>Et quod est munus, quod opus sapientiae?</li>
+    <li>Non risu potius quam oratione eiciendum?</li>
+</ul>
+
+
+<p>Cur tantas regiones barbarorum pedibus obiit, tot maria transmisit? <b>Pauca mutat vel plura sane;</b> <mark>Deinde dolorem quem maximum?</mark> Ut alios omittam, hunc appello, quem ille unum secutus est. Qui ita affectus, beatum esse numquam probabis; Quid enim de amicitia statueris utilitatis causa expetenda vides. In quibus doctissimi illi veteres inesse quiddam caeleste et divinum putaverunt. Materiam vero rerum et copiam apud hos exilem, apud illos uberrimam reperiemus. </p>";i:10;s:0:"";i:11;s:19:"2020-02-26 11:44:43";i:12;N;i:13;s:2:"[]";i:14;s:1:"3";}s:5:"types";a:0:{}s:11:"executionMS";d:0.0013391971588134766;}i:33;a:4:{s:3:"sql";s:101:"SELECT id, slug, sortorder FROM bolt_taxonomy WHERE content_id=? AND contenttype=? AND taxonomytype=?";s:6:"params";a:3:{i:0;s:1:"3";i:1;s:5:"pages";i:2;s:8:"chapters";}s:5:"types";a:3:{i:0;i:1;i:1;i:2;i:2;i:2;}s:11:"executionMS";d:0.00035405158996582031;}i:34;a:4:{s:3:"sql";s:91:"SELECT id, to_contenttype, to_id FROM bolt_relations WHERE from_id=? AND from_contenttype=?";s:6:"params";a:2:{i:0;s:1:"3";i:1;s:5:"pages";}s:5:"types";a:2:{i:0;i:1;i:1;i:2;}s:11:"executionMS";d:0.00018787384033203125;}i:35;a:4:{s:3:"sql";s:118:"SELECT id, from_contenttype AS to_contenttype, from_id AS to_id FROM bolt_relations WHERE to_id=? AND to_contenttype=?";s:6:"params";a:2:{i:0;s:1:"3";i:1;s:5:"pages";}s:5:"types";a:2:{i:0;i:1;i:1;i:2;}s:11:"executionMS";d:0.00012898445129394531;}i:36;a:4:{s:3:"sql";s:134:"INSERT INTO bolt_log_system (level, date, message, ownerid, requesturi, route, ip, context, source) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";s:6:"params";a:9:{i:0;i:200;i:1;s:19:"2020-03-02 22:14:13";i:2;s:20:"Saved: Animacion # 1";i:3;s:1:"1";i:4;s:39:"/bolt/editcontent/pages/3?returnto=ajax";i:5;s:11:"editcontent";i:6;s:13:"181.39.85.168";i:7;s:7:"content";i:8;s:73:"{"file":"\/vendor\/bolt\/bolt\/src\/Controllers\/Backend.php","line":822}";}s:5:"types";a:0:{}s:11:"executionMS";d:0.00063586235046386719;}i:37;a:4:{s:3:"sql";s:142:"SELECT bolt_pages.* FROM bolt_pages WHERE ("bolt_pages"."id" = '3' AND "bolt_pages"."status" != 'undefined') ORDER BY datepublish DESC LIMIT 1";s:6:"params";a:0:{}s:5:"types";a:0:{}s:11:"executionMS";d:0.00032877922058105469;}i:38;a:4:{s:3:"sql";s:93:"SELECT * FROM bolt_taxonomy WHERE content_id IN (?) AND contenttype=? AND taxonomytype IN (?)";s:6:"params";a:3:{i:0;a:1:{i:3;s:1:"3";}i:1;s:5:"pages";i:2;a:3:{i:0;s:4:"tags";i:1;s:8:"chapters";i:2;s:10:"categories";}}s:5:"types";a:3:{i:0;i:101;i:1;i:2;i:2;i:102;}s:11:"executionMS";d:0.00041890144348144531;}i:39;a:4:{s:3:"sql";s:84:"SELECT * FROM bolt_relations WHERE from_contenttype=? AND from_id IN (?) ORDER BY id";s:6:"params";a:2:{i:0;s:5:"pages";i:1;a:1:{i:3;s:1:"3";}}s:5:"types";a:2:{i:0;i:2;i:1;i:101;}s:11:"executionMS";d:0.00020003318786621094;}i:40;a:4:{s:3:"sql";s:80:"SELECT * FROM bolt_relations WHERE to_contenttype=? AND to_id IN (?) ORDER BY id";s:6:"params";a:2:{i:0;s:5:"pages";i:1;a:1:{i:3;s:1:"3";}}s:5:"types";a:2:{i:0;i:2;i:1;i:101;}s:11:"executionMS";d:0.00016903877258300781;}}}}s:4:"bolt";C:36:"Bolt\DataCollector\BoltDataCollector":260:{a:8:{s:7:"version";s:6:"2.2.22";s:4:"name";s:0:"";s:11:"fullversion";s:15:"Version: 2.2.22";s:6:"payoff";s:39:"Sophisticated, lightweight & simple CMS";s:9:"aboutlink";s:31:"<a href="/bolt/about">About</a>";s:8:"branding";N;s:8:"editlink";N;s:9:"edittitle";N;}}s:4:"twig";C:36:"Bolt\DataCollector\TwigDataCollector":13378:{a:7:{s:10:"extensions";a:12:{i:0;a:2:{s:4:"name";s:4:"core";s:5:"class";s:19:"Twig_Extension_Core";}i:1;a:2:{s:4:"name";s:7:"escaper";s:5:"class";s:22:"Twig_Extension_Escaper";}i:2;a:2:{s:4:"name";s:9:"optimizer";s:5:"class";s:24:"Twig_Extension_Optimizer";}i:3;a:2:{s:4:"name";s:5:"debug";s:5:"class";s:20:"Twig_Extension_Debug";}i:4;a:2:{s:4:"name";s:7:"routing";s:5:"class";s:46:"Symfony\Bridge\Twig\Extension\RoutingExtension";}i:5;a:2:{s:4:"name";s:10:"translator";s:5:"class";s:50:"Symfony\Bridge\Twig\Extension\TranslationExtension";}i:6;a:2:{s:4:"name";s:11:"http_kernel";s:5:"class";s:49:"Symfony\Bridge\Twig\Extension\HttpKernelExtension";}i:7;a:2:{s:4:"name";s:4:"form";s:5:"class";s:43:"Symfony\Bridge\Twig\Extension\FormExtension";}i:8;a:2:{s:4:"name";s:4:"Bolt";s:5:"class";s:23:"Bolt\Twig\TwigExtension";}i:9;a:2:{s:4:"name";s:4:"code";s:5:"class";s:43:"Symfony\Bridge\Twig\Extension\CodeExtension";}i:10;a:2:{s:4:"name";s:8:"profiler";s:5:"class";s:58:"Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension";}i:11;a:2:{s:4:"name";s:17:"slugify_extension";s:5:"class";s:42:"Cocur\Slugify\Bridge\Twig\SlugifyExtension";}}s:5:"tests";a:14:{i:0;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"core";s:4:"call";s:4:"even";}i:1;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"core";s:4:"call";s:3:"odd";}i:2;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"core";s:4:"call";s:7:"defined";}i:3;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"core";s:4:"call";s:6:"sameas";}i:4;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"core";s:4:"call";s:7:"same as";}i:5;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"core";s:4:"call";s:4:"none";}i:6;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"core";s:4:"call";s:4:"null";}i:7;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"core";s:4:"call";s:11:"divisibleby";}i:8;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"core";s:4:"call";s:12:"divisible by";}i:9;a:3:{s:4:"name";i:9;s:9:"extension";s:4:"core";s:4:"call";s:8:"constant";}i:10;a:3:{s:4:"name";i:10;s:9:"extension";s:4:"core";s:4:"call";s:5:"empty";}i:11;a:3:{s:4:"name";i:11;s:9:"extension";s:4:"core";s:4:"call";s:8:"iterable";}i:12;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"form";s:4:"call";s:14:"selectedchoice";}i:13;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"json";}}s:7:"filters";a:75:{i:0;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"core";s:4:"call";s:4:"date";}i:1;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"core";s:4:"call";s:11:"date_modify";}i:2;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"core";s:4:"call";s:6:"format";}i:3;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"core";s:4:"call";s:7:"replace";}i:4;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"core";s:4:"call";s:13:"number_format";}i:5;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"core";s:4:"call";s:3:"abs";}i:6;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"core";s:4:"call";s:5:"round";}i:7;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"core";s:4:"call";s:10:"url_encode";}i:8;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"core";s:4:"call";s:11:"json_encode";}i:9;a:3:{s:4:"name";i:9;s:9:"extension";s:4:"core";s:4:"call";s:16:"convert_encoding";}i:10;a:3:{s:4:"name";i:10;s:9:"extension";s:4:"core";s:4:"call";s:5:"title";}i:11;a:3:{s:4:"name";i:11;s:9:"extension";s:4:"core";s:4:"call";s:10:"capitalize";}i:12;a:3:{s:4:"name";i:12;s:9:"extension";s:4:"core";s:4:"call";s:5:"upper";}i:13;a:3:{s:4:"name";i:13;s:9:"extension";s:4:"core";s:4:"call";s:5:"lower";}i:14;a:3:{s:4:"name";i:14;s:9:"extension";s:4:"core";s:4:"call";s:9:"striptags";}i:15;a:3:{s:4:"name";i:15;s:9:"extension";s:4:"core";s:4:"call";s:4:"trim";}i:16;a:3:{s:4:"name";i:16;s:9:"extension";s:4:"core";s:4:"call";s:5:"nl2br";}i:17;a:3:{s:4:"name";i:17;s:9:"extension";s:4:"core";s:4:"call";s:4:"join";}i:18;a:3:{s:4:"name";i:18;s:9:"extension";s:4:"core";s:4:"call";s:5:"split";}i:19;a:3:{s:4:"name";i:19;s:9:"extension";s:4:"core";s:4:"call";s:4:"sort";}i:20;a:3:{s:4:"name";i:20;s:9:"extension";s:4:"core";s:4:"call";s:5:"merge";}i:21;a:3:{s:4:"name";i:21;s:9:"extension";s:4:"core";s:4:"call";s:5:"batch";}i:22;a:3:{s:4:"name";i:22;s:9:"extension";s:4:"core";s:4:"call";s:7:"reverse";}i:23;a:3:{s:4:"name";i:23;s:9:"extension";s:4:"core";s:4:"call";s:6:"length";}i:24;a:3:{s:4:"name";i:24;s:9:"extension";s:4:"core";s:4:"call";s:5:"slice";}i:25;a:3:{s:4:"name";i:25;s:9:"extension";s:4:"core";s:4:"call";s:5:"first";}i:26;a:3:{s:4:"name";i:26;s:9:"extension";s:4:"core";s:4:"call";s:4:"last";}i:27;a:3:{s:4:"name";i:27;s:9:"extension";s:4:"core";s:4:"call";s:7:"default";}i:28;a:3:{s:4:"name";i:28;s:9:"extension";s:4:"core";s:4:"call";s:4:"keys";}i:29;a:3:{s:4:"name";i:29;s:9:"extension";s:4:"core";s:4:"call";s:6:"escape";}i:30;a:3:{s:4:"name";i:30;s:9:"extension";s:4:"core";s:4:"call";s:1:"e";}i:31;a:3:{s:4:"name";i:31;s:9:"extension";s:4:"core";s:4:"call";s:5:"upper";}i:32;a:3:{s:4:"name";i:32;s:9:"extension";s:4:"core";s:4:"call";s:5:"lower";}i:33;a:3:{s:4:"name";i:0;s:9:"extension";s:7:"escaper";s:4:"call";s:3:"raw";}i:34;a:3:{s:4:"name";i:0;s:9:"extension";s:10:"translator";s:4:"call";s:5:"trans";}i:35;a:3:{s:4:"name";i:1;s:9:"extension";s:10:"translator";s:4:"call";s:11:"transchoice";}i:36;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"form";s:4:"call";s:8:"humanize";}i:37;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"Bolt";s:4:"call";s:2:"__";}i:38;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"current";}i:39;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"editable";}i:40;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"excerpt";}i:41;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"fancybox";}i:42;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"first";}i:43;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"image";}i:44;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"imageinfo";}i:45;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"Bolt";s:4:"call";s:11:"json_decode";}i:46;a:3:{s:4:"name";i:9;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"last";}i:47;a:3:{s:4:"name";i:10;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"localdate";}i:48;a:3:{s:4:"name";i:11;s:9:"extension";s:4:"Bolt";s:4:"call";s:14:"localedatetime";}i:49;a:3:{s:4:"name";i:12;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"loglevel";}i:50;a:3:{s:4:"name";i:13;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"markdown";}i:51;a:3:{s:4:"name";i:14;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"order";}i:52;a:3:{s:4:"name";i:15;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"popup";}i:53;a:3:{s:4:"name";i:16;s:9:"extension";s:4:"Bolt";s:4:"call";s:12:"preg_replace";}i:54;a:3:{s:4:"name";i:17;s:9:"extension";s:4:"Bolt";s:4:"call";s:10:"safestring";}i:55;a:3:{s:4:"name";i:18;s:9:"extension";s:4:"Bolt";s:4:"call";s:11:"selectfield";}i:56;a:3:{s:4:"name";i:19;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"showimage";}i:57;a:3:{s:4:"name";i:20;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"shuffle";}i:58;a:3:{s:4:"name";i:21;s:9:"extension";s:4:"Bolt";s:4:"call";s:3:"shy";}i:59;a:3:{s:4:"name";i:22;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"slug";}i:60;a:3:{s:4:"name";i:23;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"thumbnail";}i:61;a:3:{s:4:"name";i:24;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"trimtext";}i:62;a:3:{s:4:"name";i:25;s:9:"extension";s:4:"Bolt";s:4:"call";s:2:"tt";}i:63;a:3:{s:4:"name";i:26;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"twig";}i:64;a:3:{s:4:"name";i:27;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"ucfirst";}i:65;a:3:{s:4:"name";i:28;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"ymllink";}i:66;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"code";s:4:"call";s:10:"abbr_class";}i:67;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"code";s:4:"call";s:11:"abbr_method";}i:68;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"code";s:4:"call";s:11:"format_args";}i:69;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"code";s:4:"call";s:19:"format_args_as_text";}i:70;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"code";s:4:"call";s:12:"file_excerpt";}i:71;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"code";s:4:"call";s:11:"format_file";}i:72;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"code";s:4:"call";s:21:"format_file_from_text";}i:73;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"code";s:4:"call";s:9:"file_link";}i:74;a:3:{s:4:"name";i:0;s:9:"extension";s:17:"slugify_extension";s:4:"call";s:7:"slugify";}}s:9:"functions";a:63:{i:0;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"core";s:4:"call";s:3:"max";}i:1;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"core";s:4:"call";s:3:"min";}i:2;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"core";s:4:"call";s:5:"range";}i:3;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"core";s:4:"call";s:8:"constant";}i:4;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"core";s:4:"call";s:5:"cycle";}i:5;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"core";s:4:"call";s:6:"random";}i:6;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"core";s:4:"call";s:4:"date";}i:7;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"core";s:4:"call";s:7:"include";}i:8;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"core";s:4:"call";s:6:"source";}i:9;a:3:{s:4:"name";i:0;s:9:"extension";s:5:"debug";s:4:"call";s:4:"dump";}i:10;a:3:{s:4:"name";i:0;s:9:"extension";s:7:"routing";s:4:"call";s:3:"url";}i:11;a:3:{s:4:"name";i:1;s:9:"extension";s:7:"routing";s:4:"call";s:4:"path";}i:12;a:3:{s:4:"name";i:0;s:9:"extension";s:11:"http_kernel";s:4:"call";s:6:"render";}i:13;a:3:{s:4:"name";i:1;s:9:"extension";s:11:"http_kernel";s:4:"call";s:8:"render_*";}i:14;a:3:{s:4:"name";i:2;s:9:"extension";s:11:"http_kernel";s:4:"call";s:10:"controller";}i:15;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"form";s:4:"call";s:12:"form_enctype";}i:16;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"form";s:4:"call";s:11:"form_widget";}i:17;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"form";s:4:"call";s:11:"form_errors";}i:18;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"form";s:4:"call";s:10:"form_label";}i:19;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"form";s:4:"call";s:8:"form_row";}i:20;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"form";s:4:"call";s:9:"form_rest";}i:21;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"form";s:4:"call";s:4:"form";}i:22;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"form";s:4:"call";s:10:"form_start";}i:23;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"form";s:4:"call";s:8:"form_end";}i:24;a:3:{s:4:"name";i:9;s:9:"extension";s:4:"form";s:4:"call";s:10:"csrf_token";}i:25;a:3:{s:4:"name";i:0;s:9:"extension";s:4:"Bolt";s:4:"call";s:2:"__";}i:26;a:3:{s:4:"name";i:1;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"backtrace";}i:27;a:3:{s:4:"name";i:2;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"current";}i:28;a:3:{s:4:"name";i:3;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"data";}i:29;a:3:{s:4:"name";i:4;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"debugbar";}i:30;a:3:{s:4:"name";i:5;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"dump";}i:31;a:3:{s:4:"name";i:6;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"excerpt";}i:32;a:3:{s:4:"name";i:7;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"fancybox";}i:33;a:3:{s:4:"name";i:8;s:9:"extension";s:4:"Bolt";s:4:"call";s:11:"file_exists";}i:34;a:3:{s:4:"name";i:9;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"firebug";}i:35;a:3:{s:4:"name";i:10;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"first";}i:36;a:3:{s:4:"name";i:11;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"getuser";}i:37;a:3:{s:4:"name";i:12;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"getuserid";}i:38;a:3:{s:4:"name";i:13;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"htmllang";}i:39;a:3:{s:4:"name";i:14;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"image";}i:40;a:3:{s:4:"name";i:15;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"imageinfo";}i:41;a:3:{s:4:"name";i:16;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"isallowed";}i:42;a:3:{s:4:"name";i:17;s:9:"extension";s:4:"Bolt";s:4:"call";s:18:"ischangelogenabled";}i:43;a:3:{s:4:"name";i:18;s:9:"extension";s:4:"Bolt";s:4:"call";s:14:"ismobileclient";}i:44;a:3:{s:4:"name";i:19;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"last";}i:45;a:3:{s:4:"name";i:20;s:9:"extension";s:4:"Bolt";s:4:"call";s:11:"listcontent";}i:46;a:3:{s:4:"name";i:21;s:9:"extension";s:4:"Bolt";s:4:"call";s:13:"listtemplates";}i:47;a:3:{s:4:"name";i:22;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"markdown";}i:48;a:3:{s:4:"name";i:23;s:9:"extension";s:4:"Bolt";s:4:"call";s:4:"menu";}i:49;a:3:{s:4:"name";i:24;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"pager";}i:50;a:3:{s:4:"name";i:25;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"popup";}i:51;a:3:{s:4:"name";i:26;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"print";}i:52;a:3:{s:4:"name";i:27;s:9:"extension";s:4:"Bolt";s:4:"call";s:11:"randomquote";}i:53;a:3:{s:4:"name";i:28;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"redirect";}i:54;a:3:{s:4:"name";i:29;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"request";}i:55;a:3:{s:4:"name";i:30;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"showimage";}i:56;a:3:{s:4:"name";i:31;s:9:"extension";s:4:"Bolt";s:4:"call";s:7:"stacked";}i:57;a:3:{s:4:"name";i:32;s:9:"extension";s:4:"Bolt";s:4:"call";s:10:"stackitems";}i:58;a:3:{s:4:"name";i:33;s:9:"extension";s:4:"Bolt";s:4:"call";s:9:"thumbnail";}i:59;a:3:{s:4:"name";i:34;s:9:"extension";s:4:"Bolt";s:4:"call";s:5:"token";}i:60;a:3:{s:4:"name";i:35;s:9:"extension";s:4:"Bolt";s:4:"call";s:8:"trimtext";}i:61;a:3:{s:4:"name";i:36;s:9:"extension";s:4:"Bolt";s:4:"call";s:6:"widget";}i:62;a:3:{s:4:"name";i:0;s:9:"extension";s:8:"profiler";s:4:"call";s:13:"profiler_dump";}}s:9:"templates";a:0:{}s:14:"templatechosen";s:37:"base-2014/record.twig (record config)";s:13:"templateerror";b:0;}}}s:2:"ip";s:13:"181.39.85.168";s:6:"method";s:4:"POST";s:3:"url";s:65:"http://178.128.155.57:8080/bolt/editcontent/pages/3?returnto=ajax";s:4:"time";i:1583187253;}
